@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gokulkrishnan G | AI-Native Software Engineer | Agentic AI & Cloud Backends</title>
+  <meta name="description" content="Portfolio of Gokulkrishnan G — AI-Native Software Engineer specializing in LangGraph multi-agent orchestration, FastMCP, multi-modal LLM pipelines (AWS Bedrock), and high-performance microservices (FastAPI, Go).">
+  <meta name="keywords" content="Gokulkrishnan G, AI Engineer, Agentic AI, LangGraph, FastAPI, Python, Golang, AWS Bedrock, MCP, pgvector">
+  <meta name="author" content="Gokulkrishnan G">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gokulkrishnan G | AI-Native Software Engineer">
+  <meta property="og:description" content="AI Software Engineer with 1 year cumulative experience building production agentic systems, RAG pipelines, and cloud-native microservices.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="nav-brand" id="nav-brand-link">
+        <div class="brand-avatar">GK</div>
+        <div class="brand-text">
+          <h2>Gokulkrishnan G</h2>
+          <span>AI-Native Software Engineer</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#about" class="nav-item">About</a></li>
+        <li><a href="#experience" class="nav-item">Experience</a></li>
+        <li><a href="#projects" class="nav-item">Projects</a></li>
+        <li><a href="#credentials" class="nav-item">Credentials</a></li>
+        <li><a href="#skills" class="nav-item">Skills</a></li>
+        <li><a href="#contact" class="nav-item">Contact</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="assets/resume.pdf" download="Gokulkrishnan_G_Resume.pdf" class="btn btn-outline btn-sm" id="nav-resume-btn">
+          <i class="fa-solid fa-file-arrow-down"></i> Resume PDF
+        </a>
+        <a href="#contact" class="btn btn-primary btn-sm" id="nav-hire-btn">Hire Me</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge-row">
+          <div class="badge badge-status" id="availability-badge">
+            <span class="badge-pulse"></span>
+            <span>Immediate Joiner &bull; Open to On-site / Hybrid in Chennai, Bengaluru &amp; Remote</span>
+          </div>
+        </div>
+
+        <h1 class="hero-title">
+          Building <span class="gradient-text">Autonomous Multi-Agent AI</span> &amp; Resilient Cloud Backends.
+        </h1>
+
+        <p class="hero-desc">
+          AI-Native Software Engineer with <strong>1 year of cumulative engineering experience</strong> (including <strong>8+ months in production AI engineering</strong> at <strong>AVASOFT</strong> alongside prior cloud and full-stack internships). Holds an academic foundation in <strong>B.Tech in Artificial Intelligence &amp; Data Science (8.33 CGPA)</strong>. Specialized in <strong>agent orchestration (LangGraph, FastMCP), multi-modal LLM pipelines (Claude Haiku Vision on AWS Bedrock), computer vision (OpenCV, TensorFlow)</strong>, and <strong>high-performance microservices (Python FastAPI, Go, PostgreSQL/pgvector)</strong>.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary" id="hero-explore-projects">
+            <i class="fa-solid fa-layer-group"></i> Explore Projects
+          </a>
+          <a href="#credentials" class="btn btn-outline" id="hero-view-credentials">
+            <i class="fa-solid fa-certificate"></i> Verified Credentials
+          </a>
+          <button class="btn btn-outline" id="copy-email-btn" onclick="copyToClipboard('gokulkr3331y@gmail.com', 'Email copied to clipboard!')">
+            <i class="fa-regular fa-copy"></i> Copy Email
+          </button>
+          <a href="assets/resume.pdf" target="_blank" class="btn btn-outline" id="hero-view-resume">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> View Resume
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-number">30,000<span>+</span></div>
+          <div class="metric-label">Monthly Emails Ingested &amp; Resolved via Multi-Modal Vision AI</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number">&lt; 45<span>s</span></div>
+          <div class="metric-label">Average Incident Resolution Time (slashed down from 4+ hours)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number">50<span>+</span></div>
+          <div class="metric-label">Production REST APIs Engineered across Python FastAPI &amp; Go</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number">97<span>%+</span></div>
+          <div class="metric-label">Entity Extraction Accuracy using Claude Vision &amp; OpenCV OCR</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROFESSIONAL EXPERIENCE ================= -->
+  <section class="section" id="experience">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Track Record</span>
+        <h2 class="section-title">Professional Experience &amp; Internships</h2>
+        <p class="section-subtitle">A verified timeline of real-world production engineering, client deliverable architectures, and full-stack software development.</p>
+      </div>
+
+      <div class="experience-list">
+        <!-- AVASOFT -->
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="company-title">
+              <h3>AVASOFT</h3>
+              <h4>AI Analyst / Software Engineer (Full-Time — Joined Mid Final Year)</h4>
+            </div>
+            <div class="experience-meta">
+              <span class="date-badge"><i class="fa-regular fa-calendar"></i> Dec 2025 – Aug 2026</span>
+              <span class="location-text"><i class="fa-solid fa-location-dot"></i> Chennai, India</span>
+            </div>
+          </div>
+
+          <!-- Project 1 -->
+          <div class="project-block">
+            <div class="project-block-title">
+              <h5>Project 1: AI-Powered Ticketing &amp; Multi-Modal Automation Platform</h5>
+              <span class="client-tag">Live Sports &amp; Music Enterprise Client</span>
+            </div>
+            <ul class="bullet-list">
+              <li>Served as <strong>sole backend engineer</strong> on an event-driven microservice ecosystem (Python FastAPI &amp; Go) with <strong>50+ REST APIs</strong> processing <strong>30,000+ monthly emails</strong>, integrated with client cloud databases and <strong>Ticketmaster APIs</strong>.</li>
+              <li>Engineered a <strong>multi-modal AI pipeline</strong> using <strong>Claude Haiku 4.5 Vision (AWS Bedrock)</strong> and <strong>OpenCV image processing</strong> to OCR-parse email bodies and visual attachments, extracting ticket counts, event dates, and discrepancies with <strong>&gt;97% accuracy</strong>.</li>
+              <li>Automated intent-based <strong>Jira ticket routing</strong> and email replies via <strong>AWS EventBridge, SES, ECS</strong> with Okta + JWT authentication; slashed response times from <strong>4+ hours to &lt;45 seconds</strong>.</li>
+              <li>Integrated <strong>Azure DevOps</strong> CI/CD pipelines with <strong>webhook-triggered automated builds and deployments</strong> on PR events.</li>
+            </ul>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-block">
+            <div class="project-block-title">
+              <h5>Project 2: T3 — AI Assessment &amp; Developer Evaluation Platform</h5>
+              <span class="client-tag">Internal Core Product</span>
+            </div>
+            <ul class="bullet-list">
+              <li><strong>Voice AI Interviews:</strong> Agentic pipeline featuring speech-to-text transcription paired with LLM-based reasoning and candidate benchmark evaluation.</li>
+              <li><strong>MCQ &amp; Live Coding Engine:</strong> Adaptive LLM question generation &amp; auto-scoring; designed real-time <strong>Abstract Syntax Tree (AST) syntax &amp; logic validation</strong> via FastAPI for automated code evaluation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Edu-Varsity -->
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="company-title">
+              <h3>Edu-Varsity</h3>
+              <h4>Cloud Computing Intern</h4>
+            </div>
+            <div class="experience-meta">
+              <span class="date-badge"><i class="fa-regular fa-calendar"></i> Jun 2024 – Jul 2024</span>
+              <span class="location-text"><i class="fa-solid fa-location-dot"></i> Chennai, India</span>
+            </div>
+          </div>
+
+          <div class="project-block">
+            <div class="project-block-title">
+              <h5>Project: Cloud-Native Resume Enhancer Web Platform</h5>
+              <span class="client-tag">Tech: AWS (VPC, ECS, RDS PostgreSQL, CloudWatch, S3, IAM)</span>
+            </div>
+            <ul class="bullet-list">
+              <li>Architected and deployed a multi-tier Resume Enhancer platform on <strong>AWS ECS</strong> in a custom <strong>VPC</strong> with isolated <strong>public subnets</strong> (ingress/ALB) and <strong>private subnets</strong> for compute containers and <strong>Amazon RDS PostgreSQL</strong>.</li>
+              <li>Engineered secure resume document storage using <strong>Amazon S3</strong> pre-signed URLs and configured <strong>Amazon CloudWatch</strong> metric alarms, log groups, and health checks for continuous container telemetry and automated recovery.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- FLASH INFOLABS -->
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="company-title">
+              <h3>FLASH INFOLABS</h3>
+              <h4>Full Stack Developer Intern</h4>
+            </div>
+            <div class="experience-meta">
+              <span class="date-badge"><i class="fa-regular fa-calendar"></i> Oct 2023 – Nov 2023</span>
+              <span class="location-text"><i class="fa-solid fa-location-dot"></i> Chennai, India</span>
+            </div>
+          </div>
+
+          <div class="project-block">
+            <div class="project-block-title">
+              <h5>Project: Enterprise Employee Management &amp; Directory Portal</h5>
+              <span class="client-tag">Tech: Python FastAPI, JavaScript, HTML5, CSS3, REST APIs</span>
+            </div>
+            <ul class="bullet-list">
+              <li>Engineered a full-stack employee organization portal in a dedicated Git repo, designing modular backend REST APIs using <strong>Python FastAPI</strong> with Pydantic request models, relational schema queries, and role-based access validation.</li>
+              <li>Built a dynamic, responsive front-end interface using <strong>HTML5, CSS3, and modern JavaScript (Fetch API)</strong> for directory search, department categorization, and employee record lifecycle management.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TECHNICAL PROJECTS ================= -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Engineering Portfolio</span>
+        <h2 class="section-title">Technical Projects &amp; POCs</h2>
+        <p class="section-subtitle">Production proofs-of-concept and open-source systems demonstrating agent orchestration, RAG architectures, and scalable APIs.</p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all" id="filter-all">All Projects</button>
+        <button class="filter-btn" data-filter="agentic" id="filter-agentic">Agentic AI &amp; LLMs</button>
+        <button class="filter-btn" data-filter="cloud" id="filter-cloud">Microservices &amp; Cloud</button>
+        <button class="filter-btn" data-filter="vision" id="filter-vision">Computer Vision &amp; ML</button>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1: Multi-Agent LangGraph -->
+        <div class="project-card" data-category="agentic">
+          <div class="project-card-header">
+            <span class="project-tag">Agentic AI &bull; AVASOFT POC</span>
+            <h4>Autonomous Multi-Agent Code Generation &amp; Review System</h4>
+          </div>
+          <p class="project-card-desc">
+            Stateful multi-agent system in LangGraph orchestrating four collaborative agents: <strong>Orchestrator, Coder, Reviewer, and Researcher</strong>. Integrated custom <strong>AST static analysis tools</strong> for syntax verification, cyclic self-healing feedback loops, and persistent session memory via <strong>AsyncPostgresSaver</strong>.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">LangGraph</span>
+            <span class="tech-pill">AWS Bedrock</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">AST Analysis</span>
+            <span class="tech-pill">Python</span>
+          </div>
+          <div class="project-card-footer">
+            <span class="cert-org"><i class="fa-solid fa-diagram-project"></i> Multi-Agent Graph</span>
+            <span class="client-tag">Production POC</span>
+          </div>
+        </div>
+
+        <!-- Project 2: RAG Pipeline -->
+        <div class="project-card" data-category="agentic cloud">
+          <div class="project-card-header">
+            <span class="project-tag">RAG &amp; Vector DB &bull; AVASOFT POC</span>
+            <h4>End-to-End RAG Knowledge Base &amp; Vision Engine</h4>
+          </div>
+          <p class="project-card-desc">
+            Two-tier RAG system featuring ingestion APIs and real-time conversational retrieval. Implemented semantic document chunking, <strong>AWS Titan embeddings</strong>, and top-k cosine similarity search over <strong>PostgreSQL pgvector</strong> paired with a custom TensorFlow &amp; OpenCV pre-processing engine.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">FastAPI</span>
+            <span class="tech-pill">LlamaIndex</span>
+            <span class="tech-pill">pgvector</span>
+            <span class="tech-pill">AWS Titan</span>
+            <span class="tech-pill">OpenCV</span>
+          </div>
+          <div class="project-card-footer">
+            <span class="cert-org"><i class="fa-solid fa-database"></i> Vector Retrieval</span>
+            <span class="client-tag">Production POC</span>
+          </div>
+        </div>
+
+        <!-- Project 3: MCP Assistant -->
+        <div class="project-card" data-category="agentic">
+          <div class="project-card-header">
+            <span class="project-tag">MCP Architecture &bull; AVASOFT POC</span>
+            <h4>Multi-Server MCP Coffee Shop Assistant</h4>
+          </div>
+          <p class="project-card-desc">
+            Agentic assistant built using <strong>MultiServerMCPClient</strong> to dynamically discover and execute tools, prompts, and resources from a remote <strong>FastMCP</strong> server over streamable HTTP. Features SummarizationMiddleware, tool-level interrupts (<code style="color:var(--accent-cyan);">place_order</code>), and Human-in-the-Loop approval workflows.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">LangChain</span>
+            <span class="tech-pill">FastMCP</span>
+            <span class="tech-pill">AWS Bedrock</span>
+            <span class="tech-pill">Pydantic</span>
+            <span class="tech-pill">HITL</span>
+          </div>
+          <div class="project-card-footer">
+            <span class="cert-org"><i class="fa-solid fa-server"></i> Model Context Protocol</span>
+            <span class="client-tag">Production POC</span>
+          </div>
+        </div>
+
+        <!-- Project 4: Psychometric Assistant -->
+        <div class="project-card" data-category="agentic vision">
+          <div class="project-card-header">
+            <span class="project-tag">AI &amp; NLP &bull; College Capstone</span>
+            <h4>AI-Powered Psychometric Assistant for Stress</h4>
+          </div>
+          <p class="project-card-desc">
+            Adaptive questioning system utilizing <strong>SBERT</strong> sentence embeddings, <strong>DistilBERT</strong> stress classification, and <strong>Gemini API</strong> emotional tone analysis. Features an interactive Rasa chatbot paired with real-time stress speedometer analytics.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">SBERT</span>
+            <span class="tech-pill">DistilBERT</span>
+            <span class="tech-pill">Gemini API</span>
+            <span class="tech-pill">Rasa</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/AI-Powered-Psychometric-Assistant-for-Stress" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 5: AGV Navigation -->
+        <div class="project-card" data-category="vision">
+          <div class="project-card-header">
+            <span class="project-tag">Computer Vision &bull; Open-Source</span>
+            <h4>Automated Guided Vehicle (AGV) Intelligent Navigation</h4>
+          </div>
+          <p class="project-card-desc">
+            Computer vision-based intelligent path planning and autonomous vehicle trajectory navigation system. Open-source codebase <strong>forked by 2 external community contributors</strong>.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">OpenCV</span>
+            <span class="tech-pill">Path Planning</span>
+            <span class="tech-pill">NumPy</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/Automated-Guided-Vehicle-AGV-for-Intelligent-Navigation" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Project 6: Face Recognition Attendance -->
+        <div class="project-card" data-category="vision cloud">
+          <div class="project-card-header">
+            <span class="project-tag">Automation &bull; Computer Vision</span>
+            <h4>Presence Pro — Face Recognition &amp; Attendance System</h4>
+          </div>
+          <p class="project-card-desc">
+            Real-time biometric attendance system combining Haar cascades, face encodings, and automated absentee notification workflows with dashboard reporting.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">OpenCV</span>
+            <span class="tech-pill">SMTP Automation</span>
+            <span class="tech-pill">SQLite</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/Presence-Pro-Face-Recognition-and-Attendance-Reminder" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VERIFIED CREDENTIALS ================= -->
+  <section class="section" id="credentials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Verified Proof of Competence</span>
+        <h2 class="section-title">Certifications, Awards &amp; Research</h2>
+        <p class="section-subtitle">Click on any certificate to view high-resolution verification documents issued by Oracle, IIT Kharagpur, IEEE, and IIT Bombay.</p>
+      </div>
+
+      <div class="cert-grid">
+        <!-- Cert 1: Oracle GenAI -->
+        <div class="cert-card" onclick="openModal('assets/GEN AI.png', 'Oracle Cloud Infrastructure 2024 Generative AI Certified Professional', 'Oracle University &bull; Valid: Jul 2024 – Jul 2026')">
+          <div class="cert-img-wrap">
+            <img src="assets/GEN AI.png" alt="Oracle Generative AI Certified Professional Certificate" loading="lazy">
+            <div class="cert-overlay">
+              <span class="cert-preview-btn"><i class="fa-solid fa-eye"></i> View Certificate</span>
+            </div>
+          </div>
+          <div class="cert-body">
+            <div>
+              <span class="cert-org">Oracle Corporation &bull; Global Professional</span>
+              <h4>Oracle Cloud Infrastructure 2024 Generative AI Certified Professional</h4>
+            </div>
+            <span class="cert-meta"><i class="fa-solid fa-check-circle" style="color:var(--accent-emerald);"></i> Valid Jul 2024 – Jul 2026 &bull; Credential ID: 100719746OCI2024GAIOCP</span>
+          </div>
+        </div>
+
+        <!-- Cert 2: NPTEL IIT Kharagpur -->
+        <div class="cert-card" onclick="openModal('assets/Nptl.jpg', 'NPTEL Online Certification — Introduction to Internet of Things (Elite 75%)', 'IIT Kharagpur &amp; SWAYAM / MoE Govt of India &bull; Score: 75% (Elite)')">
+          <div class="cert-img-wrap">
+            <img src="assets/Nptl.jpg" alt="NPTEL IIT Kharagpur Certificate" loading="lazy">
+            <div class="cert-overlay">
+              <span class="cert-preview-btn"><i class="fa-solid fa-eye"></i> View Certificate</span>
+            </div>
+          </div>
+          <div class="cert-body">
+            <div>
+              <span class="cert-org">IIT Kharagpur &bull; Ministry of Education</span>
+              <h4>NPTEL Online Certification — Introduction to Internet of Things (Elite)</h4>
+            </div>
+            <span class="cert-meta"><i class="fa-solid fa-award" style="color:var(--accent-amber);"></i> Score: 75% (Elite Ribbon) &bull; Top Percentile out of 33,131 Candidates</span>
+          </div>
+        </div>
+
+        <!-- Cert 3: 1st Prize Ideathon -->
+        <div class="cert-card" onclick="openModal('assets/REC_certificate.jpeg', '1st Prize — National Level Ideathon at RESONANCE \'25', 'Rajalakshmi Engineering College &amp; IEEE Computer Society Chapter &bull; Feb 2025')">
+          <div class="cert-img-wrap">
+            <img src="assets/REC_certificate.jpeg" alt="1st Prize Ideathon Certificate" loading="lazy">
+            <div class="cert-overlay">
+              <span class="cert-preview-btn"><i class="fa-solid fa-eye"></i> View Certificate</span>
+            </div>
+          </div>
+          <div class="cert-body">
+            <div>
+              <span class="cert-org">IEEE Computer Society &bull; First Prize</span>
+              <h4>1st Prize in Ideathon at RESONANCE '25</h4>
+            </div>
+            <span class="cert-meta"><i class="fa-solid fa-trophy" style="color:var(--accent-amber);"></i> Held on Feb 15, 2025 &bull; Department of CSE, REC</span>
+          </div>
+        </div>
+
+        <!-- Cert 4: AcmeGrade IIT Bombay -->
+        <div class="cert-card" onclick="openModal('assets/acmegrade_ml.jpeg', 'Machine Learning Training Completion Certificate', 'AcmeGrade &times; Mood Indigo IIT Bombay &bull; Spring 2023')">
+          <div class="cert-img-wrap">
+            <img src="assets/acmegrade_ml.jpeg" alt="Machine Learning IIT Bombay Certificate" loading="lazy">
+            <div class="cert-overlay">
+              <span class="cert-preview-btn"><i class="fa-solid fa-eye"></i> View Certificate</span>
+            </div>
+          </div>
+          <div class="cert-body">
+            <div>
+              <span class="cert-org">AcmeGrade &times; IIT Bombay Mood Indigo</span>
+              <h4>Machine Learning Training Completion</h4>
+            </div>
+            <span class="cert-meta"><i class="fa-solid fa-brain" style="color:var(--accent-purple);"></i> Verified Training in Supervised &amp; Unsupervised ML Models</span>
+          </div>
+        </div>
+
+        <!-- Cert 5: IEEEXtreme 18.0 -->
+        <div class="cert-card" onclick="openModal('assets/IEEE_extreme.jpeg', 'IEEEXtreme 18.0 Global Competitive Programming', 'IEEE Global &bull; Ranked among 19,000+ Participants &bull; Oct 2024')">
+          <div class="cert-img-wrap">
+            <img src="assets/IEEE_extreme.jpeg" alt="IEEEXtreme 18.0 Certificate" loading="lazy">
+            <div class="cert-overlay">
+              <span class="cert-preview-btn"><i class="fa-solid fa-eye"></i> View Certificate</span>
+            </div>
+          </div>
+          <div class="cert-body">
+            <div>
+              <span class="cert-org">IEEE Global &bull; Team crown03</span>
+              <h4>IEEEXtreme 18.0 Competitive Programming</h4>
+            </div>
+            <span class="cert-meta"><i class="fa-solid fa-laptop-code" style="color:var(--accent-cyan);"></i> Worldwide 24h Virtual Hackathon &bull; 19,000+ Global Competitors</span>
+          </div>
+        </div>
+
+        <!-- Cert 6: Research Publications -->
+        <div class="cert-card" onclick="openModal('assets/paper_publish.jpeg', 'International Research Publication in IJFMR (Impact Factor: 9.24)', 'Author of Insightify: A Platform For The Betterment Of Students &bull; 2025')">
+          <div class="cert-img-wrap">
+            <img src="assets/paper_publish.jpeg" alt="Research Publication Certificate" loading="lazy">
+            <div class="cert-overlay">
+              <span class="cert-preview-btn"><i class="fa-solid fa-eye"></i> View Publication Proof</span>
+            </div>
+          </div>
+          <div class="cert-body">
+            <div>
+              <span class="cert-org">Peer-Reviewed Journals &bull; 2 Publications</span>
+              <h4>2 International Research Publications</h4>
+            </div>
+            <span class="cert-meta"><i class="fa-solid fa-newspaper" style="color:var(--accent-emerald);"></i> IJFMR (IF: 9.24, 2025) &amp; TIJER (IF: 8.57, Jul 2024)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TECHNICAL SKILLS ================= -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Core Capabilities</span>
+        <h2 class="section-title">Technical Skills Matrix</h2>
+        <p class="section-subtitle">Proficiencies in modern AI engineering, agentic frameworks, cloud infrastructure, and backend architectures.</p>
+      </div>
+
+      <div class="skills-container">
+        <!-- Category 1 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-microchip"></i>
+            <span>AI &amp; Agentic Frameworks</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">LangGraph</span>
+            <span class="skill-tag highlight">FastMCP (Model Context Protocol)</span>
+            <span class="skill-tag">LangChain</span>
+            <span class="skill-tag">LlamaIndex</span>
+            <span class="skill-tag">Human-in-the-Loop (HITL)</span>
+            <span class="skill-tag">RAG Pipelines</span>
+            <span class="skill-tag">Multi-Agent Orchestration</span>
+            <span class="skill-tag">AST Code Validation</span>
+          </div>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-brain"></i>
+            <span>LLMs, APIs &amp; Vision</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">AWS Bedrock (Claude Haiku 4.5 Vision)</span>
+            <span class="tech-pill highlight">OpenAI APIs</span>
+            <span class="skill-tag">OpenCV OCR</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">AWS Titan Embeddings</span>
+            <span class="skill-tag">Ollama (TinyLlama)</span>
+            <span class="skill-tag">Prompt Engineering</span>
+            <span class="skill-tag">Sentence-Transformers</span>
+          </div>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-server"></i>
+            <span>Backend, APIs &amp; Languages</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">Python</span>
+            <span class="skill-tag highlight">Go (Golang)</span>
+            <span class="skill-tag highlight">FastAPI</span>
+            <span class="skill-tag">Gorilla Mux</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">JavaScript / HTML5 / CSS3</span>
+            <span class="skill-tag">Pydantic</span>
+            <span class="skill-tag">RESTful APIs &amp; Microservices</span>
+            <span class="skill-tag">SOLID Principles</span>
+          </div>
+        </div>
+
+        <!-- Category 4 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-cloud"></i>
+            <span>Cloud, DevOps &amp; Databases</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">PostgreSQL (pgvector)</span>
+            <span class="skill-tag highlight">AWS (VPC, ECS, EventBridge, SES, S3, RDS)</span>
+            <span class="skill-tag">Azure DevOps (CI/CD Webhooks)</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Kubernetes (Master/Worker)</span>
+            <span class="skill-tag">Oracle Cloud (OCI)</span>
+            <span class="skill-tag">MySQL &amp; SQLite</span>
+            <span class="skill-tag">GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EDUCATION ================= -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Academic Background</span>
+        <h2 class="section-title">Education &amp; Credentials</h2>
+      </div>
+
+      <div class="experience-list">
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="company-title">
+              <h3>Panimalar Engineering College</h3>
+              <h4>B.Tech in Artificial Intelligence &amp; Data Science &bull; <span style="color:var(--accent-emerald);">CGPA: 8.33 / 10</span></h4>
+            </div>
+            <div class="experience-meta">
+              <span class="date-badge">2022 – 2026</span>
+              <span class="location-text">Chennai, Tamil Nadu, India</span>
+            </div>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem;">
+            Specialized curriculum covering Machine Learning, Deep Learning, Natural Language Processing, Autonomous Systems, and Distributed Computing. Commenced full-time production engineering role at AVASOFT during 4th year.
+          </p>
+        </div>
+
+        <div class="experience-card">
+          <div class="experience-header">
+            <div class="company-title">
+              <h3>Jayam Metric Higher Secondary School</h3>
+              <h4>Higher Secondary Certificate (HSC) — Computer Science &bull; <span style="color:var(--accent-cyan);">88.34%</span></h4>
+            </div>
+            <div class="experience-meta">
+              <span class="date-badge">Graduated May 2022</span>
+              <span class="location-text">Dharmapuri, Tamil Nadu, India</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RECRUITER CONTACT SECTION ================= -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-box">
+        <div class="contact-content">
+          <span class="section-tag">Direct Line</span>
+          <h3>Let's Build Intelligent Systems Together</h3>
+          <p>
+            Whether you are hiring for an <strong>AI Engineer</strong>, <strong>Agentic AI Specialist</strong>, or <strong>Backend Engineer (FastAPI / Go)</strong> role, I bring immediate readiness to ship production code from day one. Open to full-time roles in Chennai, Bengaluru, or Remote.
+          </p>
+
+          <div class="contact-channels">
+            <a href="mailto:gokulkr3331y@gmail.com" class="contact-card-btn" id="contact-email-link">
+              <i class="fa-solid fa-envelope" style="font-size: 1.5rem; color: var(--accent-cyan);"></i>
+              <div>
+                <span>Email Directly</span>
+                <strong>gokulkr3331y@gmail.com</strong>
+              </div>
+            </a>
+
+            <a href="tel:+919360234599" class="contact-card-btn" id="contact-phone-link">
+              <i class="fa-solid fa-phone" style="font-size: 1.5rem; color: var(--accent-emerald);"></i>
+              <div>
+                <span>Call / WhatsApp</span>
+                <strong>+91 9360234599</strong>
+              </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/gokul-krishnan-g-2026-ai/" target="_blank" class="contact-card-btn" id="contact-linkedin-link">
+              <i class="fa-brands fa-linkedin" style="font-size: 1.5rem; color: #0a66c2;"></i>
+              <div>
+                <span>Connect on LinkedIn</span>
+                <strong>gokul-krishnan-g-2026-ai</strong>
+              </div>
+            </a>
+
+            <a href="https://github.com/GOKULKRISHNAN2044" target="_blank" class="contact-card-btn" id="contact-github-link">
+              <i class="fa-brands fa-github" style="font-size: 1.5rem; color: #fff;"></i>
+              <div>
+                <span>Explore GitHub</span>
+                <strong>GOKULKRISHNAN2044</strong>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Gokulkrishnan G. Built with precision for modern AI teams.</p>
+      <p style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+        FastAPI &bull; LangGraph &bull; AWS Bedrock &bull; Go &bull; pgvector
+      </p>
+    </div>
+  </footer>
+
+  <!-- ================= CERTIFICATE LIGHTBOX MODAL ================= -->
+  <div class="modal-backdrop" id="certModal" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Certificate Preview</div>
+        <button class="modal-close" onclick="closeModal(event)" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Certificate Full Preview">
+      </div>
+      <div class="modal-header" style="border-top: 1px solid var(--border-subtle); border-bottom: none;">
+        <span style="font-size:0.85rem; color:var(--text-secondary);" id="modalSubtitle">Verified Document</span>
+        <a id="modalDownloadBtn" href="" download class="btn btn-outline btn-sm">
+          <i class="fa-solid fa-download"></i> Save Image
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toastMessage">Copied to clipboard!</div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
