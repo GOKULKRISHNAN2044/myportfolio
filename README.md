@@ -9,7 +9,7 @@
 
 <br/>
 
-**AI-Native Software Engineer | Autonomous Multi-Agent AI & Resilient Cloud Backends**
+**AI-Native Software Engineer | Autonomous Multi-Agent AI & High-Performance Backends**
 
 *B.Tech in Artificial Intelligence & Data Science (8.33 CGPA)*  
 *Specialized in LangGraph, FastMCP, Claude Vision (AWS Bedrock), FastAPI, Go & pgvector*
