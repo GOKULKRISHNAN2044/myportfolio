@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
@@ -38,6 +38,14 @@
 
 <body>
 
+  <!-- Scroll Progress / XP Bar -->
+  <div id="xp-progress-bar" class="xp-progress-bar" role="progressbar" aria-label="Reading Progress"></div>
+
+  <!-- Custom Cursor (Desktop) -->
+  <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" class="cursor-ring" aria-hidden="true"></div>
+
+
   <!-- ================= NAVBAR ================= -->
   <nav class="navbar" id="navbar">
     <div class="container nav-container">
@@ -54,24 +62,32 @@
       <ul class="nav-links">
         <li><a href="#about" class="nav-item">About</a></li>
         <li><a href="#experience" class="nav-item">Experience</a></li>
+        <li><a href="#skills" class="nav-item">Skills</a></li>
         <li><a href="#projects" class="nav-item">Projects</a></li>
         <li><a href="#credentials" class="nav-item">Credentials</a></li>
-        <li><a href="#skills" class="nav-item">Skills</a></li>
         <li><a href="#contact" class="nav-item">Contact</a></li>
       </ul>
 
       <div class="nav-cta">
+        <div class="nav-controls-group">
+          <span class="xp-badge" id="xpBadge" title="Recruiter Progression: Keep exploring to level up!"><i class="fa-solid fa-shield-halved"></i> <span class="xp-lvl-num" id="xpLevelNum">LVL 1</span><span class="xp-sep">•</span><span class="xp-role-title" id="xpRoleText">AUDITOR</span></span>
+          <button id="audioToggleBtn" class="nav-control-btn" aria-label="Toggle Sound Effects" title="Sound FX (OFF by Default)"><i class="fa-solid fa-volume-xmark"></i></button>
+          <button id="themeToggleBtn" class="nav-control-btn" aria-label="Toggle Theme" title="Toggle Light/Dark Theme"><i class="fa-solid fa-moon"></i></button>
+          <button id="cliToggleBtn" class="nav-control-btn" aria-label="Open Interactive CLI Terminal" title="Terminal Mode (Konami Code: ↑↑↓↓←→←→BA)"><i class="fa-solid fa-terminal"></i></button>
+        </div>
         <a href="assets/resume.pdf" download="Gokulkrishnan_G_Resume.pdf" class="btn btn-outline btn-sm"
-          id="nav-resume-btn">
+          id="nav-resume-btn" onclick="handleResumeDownload(event)">
           <i class="fa-solid fa-file-arrow-down"></i> Resume PDF
         </a>
         <a href="#contact" class="btn btn-primary btn-sm" id="nav-hire-btn">Hire Me</a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation Menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
       </div>
     </div>
   </nav>
 
   <!-- ================= HERO SECTION ================= -->
   <section class="hero" id="home">
+    <canvas id="heroGridCanvas" class="hero-grid-canvas" aria-hidden="true"></canvas>
     <div class="container">
       <div class="hero-grid">
         <div class="hero-content">
@@ -107,7 +123,8 @@
               onclick="copyToClipboard('gokulkr3331y@gmail.com', 'Email copied to clipboard!')">
               <i class="fa-regular fa-copy"></i> Copy Email
             </button>
-            <a href="assets/resume.pdf" target="_blank" class="btn btn-outline" id="hero-view-resume">
+            <a href="assets/resume.pdf" target="_blank" class="btn btn-outline" id="hero-view-resume"
+              onclick="handleResumeDownload(event)">
               <i class="fa-solid fa-arrow-up-right-from-square"></i> View Resume
             </a>
           </div>
@@ -123,22 +140,22 @@
         </div>
       </div>
 
-      <!-- Quick Metrics Grid -->
+      <!-- Quick Metrics Grid with Live Animated Count-Up -->
       <div class="metrics-grid">
         <div class="metric-card">
-          <div class="metric-number">30,000<span>+</span></div>
+          <div class="metric-number" data-target="30000" data-prefix="" data-suffix="+">30,000+</div>
           <div class="metric-label">Monthly Emails Ingested &amp; Resolved via Multi-Modal Vision AI</div>
         </div>
         <div class="metric-card">
-          <div class="metric-number">&lt; 45<span>s</span></div>
+          <div class="metric-number" data-target="45" data-prefix="< " data-suffix="s">&lt; 45s</div>
           <div class="metric-label">Average Incident Resolution Time (slashed down from 4+ hours)</div>
         </div>
         <div class="metric-card">
-          <div class="metric-number">50<span>+</span></div>
+          <div class="metric-number" data-target="50" data-prefix="" data-suffix="+">50+</div>
           <div class="metric-label">Production REST APIs Engineered across Python FastAPI &amp; Go</div>
         </div>
         <div class="metric-card">
-          <div class="metric-number">97<span>%+</span></div>
+          <div class="metric-number" data-target="97" data-prefix="" data-suffix="%+">97%+</div>
           <div class="metric-label">Entity Extraction Accuracy using Claude Vision &amp; OpenCV OCR</div>
         </div>
       </div>
@@ -228,7 +245,8 @@
             <ul class="bullet-list">
               <li>Architected and deployed a multi-tier Resume Enhancer platform on <strong>AWS ECS</strong> in a custom
                 <strong>VPC</strong> with isolated <strong>public subnets</strong> (ingress/ALB) and <strong>private
-                  subnets</strong> for compute containers and <strong>Amazon RDS PostgreSQL</strong>.</li>
+                  subnets</strong> for compute containers and <strong>Amazon RDS PostgreSQL</strong>.
+              </li>
               <li>Engineered secure resume document storage using <strong>Amazon S3</strong> pre-signed URLs and
                 configured <strong>Amazon CloudWatch</strong> metric alarms, log groups, and health checks for
                 continuous container telemetry and automated recovery.</li>
@@ -268,37 +286,206 @@
     </div>
   </section>
 
+  <!-- ================= TECHNICAL SKILLS ================= -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Core Capabilities</span>
+        <h2 class="section-title">Technical Skills Matrix</h2>
+        <p class="section-subtitle">Proficiencies in modern AI engineering, agentic frameworks, cloud infrastructure,
+          and backend architectures.</p>
+      </div>
+
+      <!-- Skills View Switcher -->
+      <div class="skills-view-toggle">
+        <button id="skillsViewGraphBtn" class="btn btn-outline btn-sm active" onclick="switchSkillsView('graph')">
+          <i class="fa-solid fa-circle-nodes"></i> Interactive Orbit Graph
+        </button>
+        <button id="skillsViewPillsBtn" class="btn btn-outline btn-sm" onclick="switchSkillsView('pills')">
+          <i class="fa-solid fa-table-cells"></i> Matrix Pills
+        </button>
+      </div>
+
+      <!-- Interactive Skills Orbit Canvas -->
+      <div class="skills-graph-wrapper" id="skillsGraphWrapper">
+        <div class="skills-graph-container">
+          <canvas id="skillsGraphCanvas"></canvas>
+          <div class="skills-graph-hint" id="skillsGraphHint">
+            <i class="fa-solid fa-crosshairs"></i> Click any skill node or matrix pill to lock highlight across projects (persists until next skill click)
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-container">
+        <!-- Category 1 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-microchip"></i>
+            <span>AI &amp; Agentic Frameworks</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">LangGraph</span>
+            <span class="skill-tag highlight">FastMCP (Model Context Protocol)</span>
+            <span class="skill-tag">LangChain</span>
+            <span class="skill-tag">LlamaIndex</span>
+            <span class="skill-tag">Human-in-the-Loop (HITL)</span>
+            <span class="skill-tag">RAG Pipelines</span>
+            <span class="skill-tag">Multi-Agent Orchestration</span>
+            <span class="skill-tag">AST Code Validation</span>
+          </div>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-brain"></i>
+            <span>LLMs, APIs &amp; Vision</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">AWS Bedrock (Claude Haiku 4.5 Vision)</span>
+            <span class="tech-pill highlight">OpenAI APIs</span>
+            <span class="skill-tag">OpenCV OCR</span>
+            <span class="skill-tag">TensorFlow</span>
+            <span class="skill-tag">AWS Titan Embeddings</span>
+            <span class="skill-tag">Ollama (TinyLlama)</span>
+            <span class="skill-tag">Prompt Engineering</span>
+            <span class="skill-tag">Sentence-Transformers</span>
+          </div>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-server"></i>
+            <span>Backend, APIs &amp; Languages</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">Python</span>
+            <span class="skill-tag highlight">Go (Golang)</span>
+            <span class="skill-tag highlight">FastAPI</span>
+            <span class="skill-tag">Gorilla Mux</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">JavaScript / HTML5 / CSS3</span>
+            <span class="skill-tag">Pydantic</span>
+            <span class="skill-tag">RESTful APIs &amp; Microservices</span>
+            <span class="skill-tag">SOLID Principles</span>
+          </div>
+        </div>
+
+        <!-- Category 4 -->
+        <div class="skill-category">
+          <div class="skill-category-title">
+            <i class="fa-solid fa-cloud"></i>
+            <span>Cloud, DevOps &amp; Databases</span>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-tag highlight">PostgreSQL (pgvector)</span>
+            <span class="skill-tag highlight">AWS (VPC, ECS, EventBridge, SES, S3, RDS)</span>
+            <span class="skill-tag">Azure DevOps (CI/CD Webhooks)</span>
+            <span class="skill-tag">Docker</span>
+            <span class="skill-tag">Kubernetes (Master/Worker)</span>
+            <span class="skill-tag">Oracle Cloud (OCI)</span>
+            <span class="skill-tag">MySQL &amp; SQLite</span>
+            <span class="skill-tag">GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= TECHNICAL PROJECTS ================= -->
   <section class="section" id="projects">
     <div class="container">
       <div class="section-header">
-        <span class="section-tag">Engineering Portfolio</span>
-        <h2 class="section-title">Technical Projects &amp; POCs</h2>
-        <p class="section-subtitle">Production proofs-of-concept and open-source systems demonstrating agent
-          orchestration, RAG architectures, and scalable APIs.</p>
+        <span class="section-tag">Engineering Systems</span>
+        <h2 class="section-title">Technical Projects &amp; Architectures</h2>
+        <p class="section-subtitle">Production-grade multi-agent frameworks, high-concurrency Go microservices, Clean
+          Architecture REST APIs, and enterprise RAG systems.</p>
       </div>
 
       <!-- Filter Tabs -->
-      <div class="filter-tabs">
-        <button class="filter-btn active" data-filter="all" id="filter-all">All Projects</button>
+      <div class="filter-tabs" id="projectFilterTabs">
+        <button class="filter-btn active" data-filter="all" id="filter-all">All Projects (16)</button>
         <button class="filter-btn" data-filter="agentic" id="filter-agentic">Agentic AI &amp; LLMs</button>
-        <button class="filter-btn" data-filter="cloud" id="filter-cloud">Microservices &amp; Cloud</button>
+        <button class="filter-btn" data-filter="golang" id="filter-golang">Go Microservices</button>
+        <button class="filter-btn" data-filter="backend" id="filter-backend">FastAPI &amp; Clean Arch</button>
         <button class="filter-btn" data-filter="vision" id="filter-vision">Computer Vision &amp; ML</button>
-        <button class="filter-btn" data-filter="college" id="filter-college">Academic &amp; College Projects</button>
+        <button class="filter-btn" data-filter="college" id="filter-college">Academic &amp; Capstones</button>
+      </div>
+
+      <!-- Active Skill Filter Status Banner (Dynamic) -->
+      <div class="active-filter-banner" id="activeFilterBanner" style="display: none;">
+        <span id="activeFilterBannerText">
+          <i class="fa-solid fa-crosshairs" style="color:var(--accent-cyan);margin-right:6px;"></i> Filtered by Skill: <strong id="activeFilterSkillName">Skill</strong> &bull; Showing <span id="activeFilterMatchCount">0</span> matching projects
+        </span>
+        <button class="active-filter-reset-btn" onclick="resetSkillFilter()">
+          <i class="fa-solid fa-rotate-left"></i> Show All (16 Projects)
+        </button>
       </div>
 
       <div class="projects-grid">
-        <!-- Project 1: Multi-Agent LangGraph Code Gen & Review -->
-        <div class="project-card" data-category="agentic">
+        <!-- 1. Go Flagship: Enterprise Room Booking Management Microservice -->
+        <div class="project-card" data-category="golang backend" data-skills="Go,Clean Architecture,GORM,Uber Zap,Docker,Swagger">
+          <div class="card-shine"></div>
+          <div class="project-card-header">
+            <span class="project-tag">Go Microservices &bull; Systems</span>
+            <span class="rarity-badge rarity-legendary"><i class="fa-solid fa-crown"></i> Flagship</span>
+            <h4>Enterprise Room Booking Management Microservice (Go)</h4>
+          </div>
+          <p class="project-card-desc">
+            High-concurrency enterprise reservation backend implementing a strict <strong>4-Layer Clean Architecture</strong> (Handlers, Domain Services, Repositories, Entities). Features <strong>GORM ORM</strong> database transactions, high-speed structured logging with <strong>Uber Zap</strong>, request context tracing (<code style="color:var(--accent-cyan);">X-Request-ID</code>), multi-stage <strong>Docker</strong> containerization, and interactive <strong>OpenAPI 3.0 Swagger</strong> documentation.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Go 1.22+</span>
+            <span class="tech-pill">Clean Architecture</span>
+            <span class="tech-pill">GORM</span>
+            <span class="tech-pill">Uber Zap</span>
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">Swagger</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/go-microservices-and-systems" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 2. FastAPI Clean Architecture Production REST API -->
+        <div class="project-card" data-category="backend" data-skills="Python,FastAPI,SQLAlchemy,PostgreSQL,Pytest,UV">
+          <div class="card-shine"></div>
+          <div class="project-card-header">
+            <span class="project-tag">Backend &bull; Clean Architecture</span>
+            <span class="rarity-badge rarity-legendary"><i class="fa-solid fa-shield-halved"></i> Production</span>
+            <h4>FastAPI Clean Architecture Production REST API</h4>
+          </div>
+          <p class="project-card-desc">
+            Modular, production-ready REST API built with <strong>FastAPI</strong>, <strong>SQLAlchemy 2.0 ORM</strong>, and <strong>PostgreSQL</strong>. Enforces unidirectional layered separation (Routers &rarr; Services &rarr; Repositories &rarr; Models) with strict dependency injection, defensive input validation via <strong>Pydantic v2</strong>, automated <strong>Pytest</strong> suites, and rapid packaging via <strong>UV</strong>.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Python 3.11+</span>
+            <span class="tech-pill">FastAPI</span>
+            <span class="tech-pill">SQLAlchemy 2.0</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">Pytest</span>
+            <span class="tech-pill">UV</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/fastapi-clean-architecture" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 3. Autonomous Multi-Agent Code Gen & Review (LangGraph) -->
+        <div class="project-card" data-category="agentic backend" data-skills="LangGraph,FastAPI,AWS Bedrock,PostgreSQL,AST Analysis">
+          <div class="card-shine"></div>
           <div class="project-card-header">
             <span class="project-tag">Agentic AI &bull; Open-Source</span>
+            <span class="rarity-badge rarity-legendary"><i class="fa-solid fa-sparkles"></i> AI Flagship</span>
             <h4>Autonomous Multi-Agent Code Generation &amp; Review System</h4>
           </div>
           <p class="project-card-desc">
-            Stateful multi-agent system in LangGraph orchestrating collaborative agents (<strong>Orchestrator,
-              Coder, Reviewer, and Researcher</strong>). Integrated custom <strong>AST static analysis tools</strong> for
-            syntax verification, cyclic self-healing feedback loops, and persistent session memory via
-            <strong>AsyncPostgresSaver</strong>.
+            Stateful multi-agent system in <strong>LangGraph</strong> orchestrating collaborative agents (<strong>Orchestrator, Coder, Reviewer, and Researcher</strong>). Integrated custom <strong>AST static analysis tools</strong> for syntax verification, cyclic self-healing feedback loops, and persistent session memory via <strong>AsyncPostgresSaver</strong>.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">LangGraph</span>
@@ -315,16 +502,68 @@
           </div>
         </div>
 
-        <!-- Project 2: LangGraph Dynamic Handoff Multi-Agent System -->
-        <div class="project-card" data-category="agentic cloud">
+        <!-- 4. Enterprise RAG Knowledge Base & Semantic Recommendation System -->
+        <div class="project-card" data-category="agentic backend" data-skills="FastAPI,AWS Bedrock,pgvector,PostgreSQL,Cosine Search">
+          <div class="card-shine"></div>
           <div class="project-card-header">
-            <span class="project-tag">Agentic AI &bull; Open-Source</span>
+            <span class="project-tag">RAG &amp; Vector DB &bull; Open-Source</span>
+            <span class="rarity-badge rarity-legendary"><i class="fa-solid fa-database"></i> Vector RAG</span>
+            <h4>Enterprise RAG Knowledge Base &amp; Recommendation System</h4>
+          </div>
+          <p class="project-card-desc">
+            Production-grade 2-stage asynchronous RAG pipeline: automated document ingestion, semantic chunking, high-dimensional vector embeddings via <strong>AWS Bedrock</strong>, and Top-K cosine distance retrieval over <strong>PostgreSQL pgvector</strong> paired with hallucination-free LLM synthesis.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">FastAPI</span>
+            <span class="tech-pill">AWS Bedrock</span>
+            <span class="tech-pill">PostgreSQL</span>
+            <span class="tech-pill">pgvector</span>
+            <span class="tech-pill">Cosine Search</span>
+            <span class="tech-pill">Asyncpg</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/enterprise-rag-knowledge-system" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 5. Agentic HITL Multi-Agent Framework & FastMCP -->
+        <div class="project-card" data-category="agentic backend" data-skills="LangGraph,FastMCP,FastAPI,PostgreSQL,HITL">
+          <div class="card-shine"></div>
+          <div class="project-card-header">
+            <span class="project-tag">Agentic AI &bull; Framework</span>
+            <span class="rarity-badge rarity-epic"><i class="fa-solid fa-bolt"></i> Epic</span>
+            <h4>Agentic Human-in-the-Loop (HITL) Framework &amp; FastMCP</h4>
+          </div>
+          <p class="project-card-desc">
+            Enterprise-grade Multi-Agent state machine implementing the <strong>Agent-as-a-Tool</strong> design pattern. Features <strong>Human-in-the-Loop (HITL)</strong> decision interrupt/resume checkpoints (<code style="color:var(--accent-cyan);">place_order</code>), persistent PostgreSQL state checkpointers via <strong>AsyncPostgresSaver</strong>, and decoupled tool consumption.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">LangGraph</span>
+            <span class="tech-pill">FastMCP</span>
+            <span class="tech-pill">FastAPI</span>
+            <span class="tech-pill">HITL</span>
+            <span class="tech-pill">AsyncPostgresSaver</span>
+            <span class="tech-pill">AWS Bedrock</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/agentic-hitl-framework" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 6. LangGraph Multi-Agent Architecture with Dynamic Handoffs -->
+        <div class="project-card" data-category="agentic backend" data-skills="LangGraph,Dynamic Handoffs,FastAPI,AWS Bedrock">
+          <div class="card-shine"></div>
+          <div class="project-card-header">
+            <span class="project-tag">Agentic AI &bull; Handoffs</span>
+            <span class="rarity-badge rarity-epic"><i class="fa-solid fa-shuffle"></i> Epic</span>
             <h4>LangGraph Multi-Agent Architecture with Dynamic Handoffs</h4>
           </div>
           <p class="project-card-desc">
-            Decentralized agent orchestration framework using <strong>dynamic agent-to-agent handoffs</strong> in LangGraph.
-            Features autonomous control transfer between specialized domain agents, AST-driven validation tools,
-            structured prompt workflows, and resilient <strong>FastAPI microservice</strong> endpoints.
+            Decentralized agent orchestration framework using <strong>dynamic agent-to-agent state handoffs</strong> in LangGraph. Features autonomous control delegation between specialized domain agents, AST-driven validation tools, and structured prompt pipelines.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">LangGraph</span>
@@ -341,42 +580,16 @@
           </div>
         </div>
 
-        <!-- Project 3: RAG Pipeline -->
-        <div class="project-card" data-category="agentic cloud">
+        <!-- 7. LangChain AI Projects & Multi-Server MCP Agents Suite -->
+        <div class="project-card" data-category="agentic" data-skills="LangChain,FastMCP,AWS Bedrock,PostgreSQL,HITL">
+          <div class="card-shine"></div>
           <div class="project-card-header">
-            <span class="project-tag">RAG &amp; Vector DB &bull; AVASOFT POC</span>
-            <h4>End-to-End RAG Knowledge Base &amp; Vision Engine</h4>
-          </div>
-          <p class="project-card-desc">
-            Two-tier RAG system featuring ingestion APIs and real-time conversational retrieval. Implemented semantic
-            document chunking, <strong>AWS Titan embeddings</strong>, and top-k cosine similarity search over
-            <strong>PostgreSQL pgvector</strong> paired with a custom TensorFlow &amp; OpenCV pre-processing engine.
-          </p>
-          <div class="tech-pills">
-            <span class="tech-pill">FastAPI</span>
-            <span class="tech-pill">LlamaIndex</span>
-            <span class="tech-pill">pgvector</span>
-            <span class="tech-pill">AWS Titan</span>
-            <span class="tech-pill">OpenCV</span>
-          </div>
-          <div class="project-card-footer">
-            <span class="cert-org"><i class="fa-solid fa-database"></i> Vector Retrieval</span>
-            <span class="client-tag">Production POC</span>
-          </div>
-        </div>
-
-        <!-- Project 4: LangChain Agents Suite & MCP -->
-        <div class="project-card" data-category="agentic">
-          <div class="project-card-header">
-            <span class="project-tag">Agentic AI &bull; Open-Source</span>
+            <span class="project-tag">Agentic AI &bull; MCP Suite</span>
+            <span class="rarity-badge rarity-epic"><i class="fa-solid fa-cubes"></i> Epic</span>
             <h4>LangChain AI Projects &amp; Multi-Server MCP Agents Suite</h4>
           </div>
           <p class="project-card-desc">
-            Production-ready suite of <strong>7 modular AI Agent architectures</strong> featuring
-            <strong>MultiServerMCPClient</strong>, decoupled <strong>FastMCP</strong> tool/prompt/resource resolution
-            over HTTP, <strong>Human-in-the-Loop (HITL)</strong> interrupt/resume checkpoints (<code
-              style="color:var(--accent-cyan);">place_order</code>), AWS Bedrock Data Automation (BDA) multimodal
-            image/doc scanning, and <strong>SummarizationMiddleware</strong> state compression.
+            Production-ready suite of <strong>7 modular AI Agent architectures</strong> featuring <strong>MultiServerMCPClient</strong>, decoupled <strong>FastMCP</strong> tool/prompt/resource resolution over HTTP, AWS Bedrock Data Automation (BDA) multimodal document scanning, and <strong>SummarizationMiddleware</strong> state compression.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">LangChain</span>
@@ -393,16 +606,90 @@
           </div>
         </div>
 
-        <!-- Project 5: Psychometric Assistant -->
-        <div class="project-card" data-category="agentic vision college">
+        <!-- 8. Go: Library Reservation Layered REST Microservice -->
+        <div class="project-card" data-category="golang backend" data-skills="Go,Gorilla Mux,Clean Architecture,GoMock">
+          <div class="card-shine"></div>
+          <div class="project-card-header">
+            <span class="project-tag">Go Microservices &bull; Systems</span>
+            <span class="rarity-badge rarity-epic"><i class="fa-solid fa-book-bookmark"></i> Epic</span>
+            <h4>Library Reservation Layered REST Microservice (Go)</h4>
+          </div>
+          <p class="project-card-desc">
+            Decoupled Clean Architecture microservice in Go (<code style="color:var(--accent-cyan);">Handler &rarr; Service &rarr; Data</code>). Implements standardized JSON DTO validation, request context propagation (<code style="color:var(--accent-cyan);">X-Request-ID</code>), and comprehensive unit testing with <strong>GoMock</strong>.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Go 1.22+</span>
+            <span class="tech-pill">gorilla/mux</span>
+            <span class="tech-pill">Clean Architecture</span>
+            <span class="tech-pill">Go Context</span>
+            <span class="tech-pill">GoMock</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/go-microservices-and-systems" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 9. Go: Employee Payroll Engine with TDD -->
+        <div class="project-card" data-category="golang" data-skills="Go,TDD,Unit Testing">
+          <div class="card-shine"></div>
+          <div class="project-card-header">
+            <span class="project-tag">Go Microservices &bull; Systems</span>
+            <span class="rarity-badge rarity-rare"><i class="fa-solid fa-calculator"></i> Rare</span>
+            <h4>Employee Payroll Business Logic Engine (Go &bull; TDD)</h4>
+          </div>
+          <p class="project-card-desc">
+            Robust financial calculation engine engineered in Go using strict <strong>Test-Driven Development (TDD)</strong>. Features 1.5x overtime multiplier thresholds, defensive validation rules, and <strong>100% Table-Driven Unit Tests</strong> via standard Go subtests (<code style="color:var(--accent-cyan);">t.Run</code>).
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Go 1.22+</span>
+            <span class="tech-pill">TDD</span>
+            <span class="tech-pill">Table-Driven Tests</span>
+            <span class="tech-pill">Defensive Coding</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/go-microservices-and-systems" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 10. Go: Core Concurrency Mechanics & Systems -->
+        <div class="project-card" data-category="golang" data-skills="Go,Concurrency,Goroutines,Channels">
+          <div class="card-shine"></div>
+          <div class="project-card-header">
+            <span class="project-tag">Go Microservices &bull; Primitives</span>
+            <span class="rarity-badge rarity-rare"><i class="fa-solid fa-microchip"></i> Rare</span>
+            <h4>Go Core Concurrency Mechanics &amp; Systems</h4>
+          </div>
+          <p class="project-card-desc">
+            Foundational systems programming suite demonstrating Go runtime memory allocation, pointers, struct composition, and concurrent primitives: Goroutines, buffered channels, <code style="color:var(--accent-cyan);">sync.WaitGroup</code>, and <code style="color:var(--accent-cyan);">sync.Mutex</code> race-condition safety.
+          </p>
+          <div class="tech-pills">
+            <span class="tech-pill">Go 1.22+</span>
+            <span class="tech-pill">Goroutines</span>
+            <span class="tech-pill">Channels</span>
+            <span class="tech-pill">sync.Mutex</span>
+            <span class="tech-pill">sync.WaitGroup</span>
+          </div>
+          <div class="project-card-footer">
+            <a href="https://github.com/GOKULKRISHNAN2044/go-microservices-and-systems" target="_blank" class="project-link">
+              <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- 11. AI-Powered Psychometric Assistant for Stress -->
+        <div class="project-card" data-category="agentic vision college" data-skills="Python,SBERT,DistilBERT,Gemini API,Rasa">
+          <div class="card-shine"></div>
           <div class="project-card-header">
             <span class="project-tag">AI &amp; NLP &bull; College Capstone</span>
+            <span class="rarity-badge rarity-common"><i class="fa-solid fa-heart-pulse"></i> Capstone</span>
             <h4>AI-Powered Psychometric Assistant for Stress</h4>
           </div>
           <p class="project-card-desc">
-            Adaptive questioning system utilizing <strong>SBERT</strong> sentence embeddings,
-            <strong>DistilBERT</strong> stress classification, and <strong>Gemini API</strong> emotional tone analysis.
-            Features an interactive Rasa chatbot paired with real-time stress speedometer analytics.
+            Adaptive questioning system utilizing <strong>SBERT</strong> sentence embeddings, <strong>DistilBERT</strong> stress classification, and <strong>Gemini API</strong> emotional tone analysis. Features an interactive Rasa chatbot paired with real-time stress speedometer analytics.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">Python</span>
@@ -412,22 +699,22 @@
             <span class="tech-pill">Rasa</span>
           </div>
           <div class="project-card-footer">
-            <a href="https://github.com/GOKULKRISHNAN2044/AI-Powered-Psychometric-Assistant-for-Stress" target="_blank"
-              class="project-link">
+            <a href="https://github.com/GOKULKRISHNAN2044/AI-Powered-Psychometric-Assistant-for-Stress" target="_blank" class="project-link">
               <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
             </a>
           </div>
         </div>
 
-        <!-- Project 6: AGV Navigation -->
-        <div class="project-card" data-category="vision college">
+        <!-- 12. AGV Navigation -->
+        <div class="project-card" data-category="vision college" data-skills="Python,OpenCV,Path Planning,NumPy">
+          <div class="card-shine"></div>
           <div class="project-card-header">
-            <span class="project-tag">Computer Vision &bull; College Project</span>
+            <span class="project-tag">Computer Vision &bull; Research Capstone</span>
+            <span class="rarity-badge rarity-rare"><i class="fa-solid fa-code-fork"></i> 2 Forks</span>
             <h4>Automated Guided Vehicle (AGV) Intelligent Navigation</h4>
           </div>
           <p class="project-card-desc">
-            Computer vision-based intelligent path planning and autonomous vehicle trajectory navigation system.
-            Open-source codebase <strong>forked by 2 external community contributors</strong>.
+            Computer vision-based intelligent path planning and autonomous vehicle trajectory navigation system using OpenCV edge tracking and NumPy. Open-source codebase <strong>forked by 2 external community contributors</strong>.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">Python</span>
@@ -436,22 +723,22 @@
             <span class="tech-pill">NumPy</span>
           </div>
           <div class="project-card-footer">
-            <a href="https://github.com/GOKULKRISHNAN2044/Automated-Guided-Vehicle-AGV-for-Intelligent-Navigation"
-              target="_blank" class="project-link">
+            <a href="https://github.com/GOKULKRISHNAN2044/Automated-Guided-Vehicle-AGV-for-Intelligent-Navigation" target="_blank" class="project-link">
               <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
             </a>
           </div>
         </div>
 
-        <!-- Project 7: Face Recognition Attendance -->
-        <div class="project-card" data-category="vision cloud college">
+        <!-- 13. Presence Pro: Face Recognition Attendance -->
+        <div class="project-card" data-category="vision college" data-skills="Python,OpenCV,Haar Cascades,SQLite">
+          <div class="card-shine"></div>
           <div class="project-card-header">
             <span class="project-tag">Biometric CV &bull; College Project</span>
+            <span class="rarity-badge rarity-common"><i class="fa-solid fa-user-check"></i> Project</span>
             <h4>Presence Pro — Face Recognition &amp; Attendance System</h4>
           </div>
           <p class="project-card-desc">
-            Real-time biometric attendance system combining Haar cascades, face encodings, and automated absentee
-            notification workflows with dashboard reporting.
+            Real-time biometric attendance system combining Haar cascades, face encodings, and automated absentee notification workflows via SMTP with SQLite database logging.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">Python</span>
@@ -460,28 +747,28 @@
             <span class="tech-pill">SQLite</span>
           </div>
           <div class="project-card-footer">
-            <a href="https://github.com/GOKULKRISHNAN2044/Presence-Pro-Face-Recognition-and-Attendance-Reminder"
-              target="_blank" class="project-link">
+            <a href="https://github.com/GOKULKRISHNAN2044/Presence-Pro-Face-Recognition-and-Attendance-Reminder" target="_blank" class="project-link">
               <i class="fa-brands fa-github"></i> View Repo <i class="fa-solid fa-arrow-right"></i>
             </a>
           </div>
         </div>
 
-        <!-- Project 8: Handwritten Digit Recognition -->
-        <div class="project-card" data-category="vision college">
+        <!-- 14. Handwritten Digit Recognition -->
+        <div class="project-card" data-category="vision college" data-skills="Python,TensorFlow,Keras CNN,OpenCV">
+          <div class="card-shine"></div>
           <div class="project-card-header">
             <span class="project-tag">Deep Learning &bull; College Project</span>
+            <span class="rarity-badge rarity-common"><i class="fa-solid fa-pen-nib"></i> Project</span>
             <h4>Handwritten Digit Recognition with TensorFlow CNN</h4>
           </div>
           <p class="project-card-desc">
-            Deep learning computer vision system utilizing a <strong>Convolutional Neural Network (CNN)</strong> built with <strong>TensorFlow &amp; Keras</strong> for MNIST digit classification. Features image preprocessing, normalization pipelines, and high-accuracy multi-class probability scoring.
+            Deep learning computer vision system utilizing a <strong>Convolutional Neural Network (CNN)</strong> built with <strong>TensorFlow &amp; Keras</strong> for MNIST digit classification with preprocessing pipelines.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">Python</span>
             <span class="tech-pill">TensorFlow</span>
             <span class="tech-pill">Keras CNN</span>
             <span class="tech-pill">OpenCV</span>
-            <span class="tech-pill">NumPy</span>
           </div>
           <div class="project-card-footer">
             <a href="https://github.com/GOKULKRISHNAN2044/Handwritten-Digit-Recognition-with-TensorFlow-main" target="_blank" class="project-link">
@@ -490,21 +777,22 @@
           </div>
         </div>
 
-        <!-- Project 9: Medical Diagnostic Chatbot -->
-        <div class="project-card" data-category="agentic vision college">
+        <!-- 15. Medical Diagnostic Chatbot -->
+        <div class="project-card" data-category="agentic college" data-skills="Python,NLP,TensorFlow,NLTK">
+          <div class="card-shine"></div>
           <div class="project-card-header">
             <span class="project-tag">Healthcare AI &bull; College Project</span>
+            <span class="rarity-badge rarity-common"><i class="fa-solid fa-stethoscope"></i> Project</span>
             <h4>Medical AI Chatbot &amp; Diagnostic Assistant</h4>
           </div>
           <p class="project-card-desc">
-            Conversational healthcare assistant engineered in Python and Jupyter Notebook. Utilizes <strong>NLP text tokenization</strong>, intent recognition patterns, and symptom classification workflows to provide automated health triaging and patient guidance.
+            Conversational healthcare assistant engineered in Python and Jupyter Notebook. Utilizes <strong>NLP text tokenization</strong>, intent recognition patterns, and symptom classification workflows for automated triaging.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">Python</span>
             <span class="tech-pill">NLP</span>
             <span class="tech-pill">TensorFlow</span>
             <span class="tech-pill">NLTK</span>
-            <span class="tech-pill">Jupyter</span>
           </div>
           <div class="project-card-footer">
             <a href="https://github.com/GOKULKRISHNAN2044/Mchatbot" target="_blank" class="project-link">
@@ -513,21 +801,22 @@
           </div>
         </div>
 
-        <!-- Project 10: Java OOP & Data Structures Suite -->
-        <div class="project-card" data-category="cloud college">
+        <!-- 16. Java OOP & Data Structures Practical Suite -->
+        <div class="project-card" data-category="college" data-skills="Java,OOP,Multithreading,Data Structures">
+          <div class="card-shine"></div>
           <div class="project-card-header">
             <span class="project-tag">Core Java &bull; College Lab &amp; OOP</span>
+            <span class="rarity-badge rarity-common"><i class="fa-solid fa-code"></i> Project</span>
             <h4>Java OOP &amp; Data Structures Practical Suite</h4>
           </div>
           <p class="project-card-desc">
-            College laboratory implementations demonstrating core <strong>Object-Oriented Programming (OOP)</strong> paradigms (Inheritance, Polymorphism, Encapsulation, Abstraction), robust Exception Handling hierarchies, <strong>Multithreading &amp; Concurrency</strong>, File I/O streams, and algorithmic problem-solving.
+            College laboratory implementations demonstrating core <strong>Object-Oriented Programming (OOP)</strong> paradigms, Exception Handling hierarchies, <strong>Multithreading &amp; Concurrency</strong>, and File I/O.
           </p>
           <div class="tech-pills">
             <span class="tech-pill">Java</span>
             <span class="tech-pill">OOP</span>
             <span class="tech-pill">Data Structures</span>
             <span class="tech-pill">Multithreading</span>
-            <span class="tech-pill">File I/O</span>
           </div>
           <div class="project-card-footer">
             <a href="https://github.com/GOKULKRISHNAN2044/Java-pogram" target="_blank" class="project-link">
@@ -667,93 +956,6 @@
     </div>
   </section>
 
-  <!-- ================= TECHNICAL SKILLS ================= -->
-  <section class="section" id="skills">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Core Capabilities</span>
-        <h2 class="section-title">Technical Skills Matrix</h2>
-        <p class="section-subtitle">Proficiencies in modern AI engineering, agentic frameworks, cloud infrastructure,
-          and backend architectures.</p>
-      </div>
-
-      <div class="skills-container">
-        <!-- Category 1 -->
-        <div class="skill-category">
-          <div class="skill-category-title">
-            <i class="fa-solid fa-microchip"></i>
-            <span>AI &amp; Agentic Frameworks</span>
-          </div>
-          <div class="skill-pills">
-            <span class="skill-tag highlight">LangGraph</span>
-            <span class="skill-tag highlight">FastMCP (Model Context Protocol)</span>
-            <span class="skill-tag">LangChain</span>
-            <span class="skill-tag">LlamaIndex</span>
-            <span class="skill-tag">Human-in-the-Loop (HITL)</span>
-            <span class="skill-tag">RAG Pipelines</span>
-            <span class="skill-tag">Multi-Agent Orchestration</span>
-            <span class="skill-tag">AST Code Validation</span>
-          </div>
-        </div>
-
-        <!-- Category 2 -->
-        <div class="skill-category">
-          <div class="skill-category-title">
-            <i class="fa-solid fa-brain"></i>
-            <span>LLMs, APIs &amp; Vision</span>
-          </div>
-          <div class="skill-pills">
-            <span class="skill-tag highlight">AWS Bedrock (Claude Haiku 4.5 Vision)</span>
-            <span class="tech-pill highlight">OpenAI APIs</span>
-            <span class="skill-tag">OpenCV OCR</span>
-            <span class="skill-tag">TensorFlow</span>
-            <span class="skill-tag">AWS Titan Embeddings</span>
-            <span class="skill-tag">Ollama (TinyLlama)</span>
-            <span class="skill-tag">Prompt Engineering</span>
-            <span class="skill-tag">Sentence-Transformers</span>
-          </div>
-        </div>
-
-        <!-- Category 3 -->
-        <div class="skill-category">
-          <div class="skill-category-title">
-            <i class="fa-solid fa-server"></i>
-            <span>Backend, APIs &amp; Languages</span>
-          </div>
-          <div class="skill-pills">
-            <span class="skill-tag highlight">Python</span>
-            <span class="skill-tag highlight">Go (Golang)</span>
-            <span class="skill-tag highlight">FastAPI</span>
-            <span class="skill-tag">Gorilla Mux</span>
-            <span class="skill-tag">Java</span>
-            <span class="skill-tag">JavaScript / HTML5 / CSS3</span>
-            <span class="skill-tag">Pydantic</span>
-            <span class="skill-tag">RESTful APIs &amp; Microservices</span>
-            <span class="skill-tag">SOLID Principles</span>
-          </div>
-        </div>
-
-        <!-- Category 4 -->
-        <div class="skill-category">
-          <div class="skill-category-title">
-            <i class="fa-solid fa-cloud"></i>
-            <span>Cloud, DevOps &amp; Databases</span>
-          </div>
-          <div class="skill-pills">
-            <span class="skill-tag highlight">PostgreSQL (pgvector)</span>
-            <span class="skill-tag highlight">AWS (VPC, ECS, EventBridge, SES, S3, RDS)</span>
-            <span class="skill-tag">Azure DevOps (CI/CD Webhooks)</span>
-            <span class="skill-tag">Docker</span>
-            <span class="skill-tag">Kubernetes (Master/Worker)</span>
-            <span class="skill-tag">Oracle Cloud (OCI)</span>
-            <span class="skill-tag">MySQL &amp; SQLite</span>
-            <span class="skill-tag">GitHub Actions</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ================= EDUCATION ================= -->
   <section class="section" id="about">
     <div class="container">
@@ -860,6 +1062,56 @@
       </p>
     </div>
   </footer>
+
+  
+  <!-- ================= INTERACTIVE CLI TERMINAL (EASTER EGG) ================= -->
+  <div class="cli-modal-backdrop" id="cliModal" onclick="closeCliModal(event)">
+    <div class="cli-window" onclick="event.stopPropagation()">
+      <div class="cli-titlebar">
+        <div class="cli-traffic-lights">
+          <span class="cli-dot red" onclick="closeCliModal(event)"></span>
+          <span class="cli-dot yellow"></span>
+          <span class="cli-dot green"></span>
+        </div>
+        <div class="cli-title">gokul@engineer: ~ (GOKUL-OS v2.6)</div>
+        <button class="modal-close" onclick="closeCliModal(event)" aria-label="Close terminal">&times;</button>
+      </div>
+      <div class="cli-body" id="cliBody">
+        <div class="cli-line accent">[SYSTEM BOOT] Gokulkrishnan G &bull; AI-Native Software Engineer Terminal</div>
+        <div class="cli-line info">Type 'help' to see commands, or tap quick action chips below.</div>
+        <div class="cli-line highlight">Try: whoami, stack, metrics, projects, resume, clear, exit</div>
+        <div class="cli-line info">--------------------------------------------------</div>
+      </div>
+      <div class="cli-chips">
+        <span class="cli-chip-label">Quick:</span>
+        <button class="cli-chip" onclick="execCliCmd('whoami')">$ whoami</button>
+        <button class="cli-chip" onclick="execCliCmd('stack')">$ stack</button>
+        <button class="cli-chip" onclick="execCliCmd('metrics')">$ metrics</button>
+        <button class="cli-chip" onclick="execCliCmd('projects')">$ projects</button>
+        <button class="cli-chip" onclick="execCliCmd('resume')">$ resume</button>
+        <button class="cli-chip" onclick="execCliCmd('clear')">$ clear</button>
+      </div>
+      <div class="cli-input-row" style="padding: 10px 18px; background: #070a12; border-top: 1px solid rgba(255,255,255,0.06);">
+        <span class="cli-prompt-label">gokul@engineer:~$</span>
+        <input type="text" id="cliInput" class="cli-input" placeholder="Type a command..." autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Achievement Toast -->
+  <div id="achievementToast" class="achievement-toast" role="status" aria-live="polite">
+    <div class="achievement-icon-box">
+      <i class="fa-solid fa-award"></i>
+    </div>
+    <div class="achievement-content">
+      <div class="achievement-title">Achievement Unlocked</div>
+      <div class="achievement-desc" id="achievementDesc">Explored Production AI Systems</div>
+    </div>
+    <button class="achievement-close" onclick="dismissAchievement()">&times;</button>
+  </div>
 
   <!-- ================= CERTIFICATE LIGHTBOX MODAL ================= -->
   <div class="modal-backdrop" id="certModal" onclick="closeModal(event)">
