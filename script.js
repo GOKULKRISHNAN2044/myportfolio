@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollSpy();
   initMobileMenu();
   initKeyboardNav();
+  initScrollReveal();
+  initBackToTop();
 
   // Lazy-load 3D hero experiences if motion is permitted
   if (!prefersReducedMotion && !isLowEndDevice) {
@@ -74,11 +76,16 @@ function initTheme() {
 }
 
 function initDynamicClickbait() {
+  // Never display intrusive clickbait toast on mobile screens
+  if (window.innerWidth <= 768) return;
+
   // If already dismissed in this session, don't show
   if (sessionStorage.getItem('theme_clickbait_dismissed')) return;
 
   // Wait 1.2s after page loads before showing floating clickbait
   setTimeout(() => {
+    // Check mobile again in case of resize
+    if (window.innerWidth <= 768) return;
     // Only show if user is still in light mode
     if (document.documentElement.getAttribute('data-theme') !== 'light') return;
     if (document.getElementById('themeClickbaitToast')) return;
@@ -482,6 +489,11 @@ function initProjectFilters() {
       btn.classList.add('active');
       playBlip(650, 'sine', 0.03);
 
+      // Smooth horizontal scroll to center active filter button on mobile
+      if (typeof btn.scrollIntoView === 'function') {
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+
       const filter = btn.getAttribute('data-filter');
 
       // Re-append cards in original order
@@ -525,14 +537,27 @@ function initSkillsInteractiveGraph() {
   if (!ctx) return;
 
   const container = canvas.parentElement;
-  let width = (canvas.width = container.offsetWidth || 800);
-  let height = (canvas.height = 440);
+  let width = 800;
+  let height = 440;
+  let dpr = 1;
+
+  function updateCanvasDimensions() {
+    if (!container) return;
+    const isMobile = window.innerWidth < 640 || (container.offsetWidth && container.offsetWidth < 600);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = container.offsetWidth || 800;
+    height = isMobile ? 380 : 440;
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  updateCanvasDimensions();
 
   window.addEventListener('resize', () => {
-    if (container.offsetWidth) {
-      width = canvas.width = container.offsetWidth;
-      height = canvas.height = 440;
-    }
+    updateCanvasDimensions();
   });
 
   // Hubs and Orbiting Skills
@@ -568,18 +593,25 @@ function initSkillsInteractiveGraph() {
   let mouseX = -1000;
   let mouseY = -1000;
   let hoveredNode = null;
+  let isDraggingCanvas = false;
+  let lastTouchX = 0;
+  let lastTouchY = 0;
+  let touchStartTime = 0;
+
+  const updatePointer = (clientX, clientY) => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = clientX - rect.left;
+    mouseY = clientY - rect.top;
+  };
 
   canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+    updatePointer(e.clientX, e.clientY);
   });
 
   canvas.addEventListener('mouseleave', () => {
     mouseX = -1000;
     mouseY = -1000;
     hoveredNode = null;
-    // Keep active locked filter visual state intact on mouseleave
     if (activeLockedSkill) {
       highlightProjectsForSkill(activeLockedSkill);
       highlightMatrixPillsForSkill(activeLockedSkill);
@@ -589,10 +621,80 @@ function initSkillsInteractiveGraph() {
     }
   });
 
-  // Clicking any node locks the filter state until the next skill is clicked
-  canvas.addEventListener('click', () => {
-    if (hoveredNode) {
+  // Tap or click selection with generous touch radius
+  const handleNodeSelect = (clientX, clientY) => {
+    updatePointer(clientX, clientY);
+    const isMobile = width < 640;
+    const cx = width / 2;
+    const cy = height / 2;
+    const hubSpreadX = isMobile ? Math.min(width * 0.28, 88) : 180;
+    const hubSpreadY = isMobile ? 65 : 75;
+
+    let closest = null;
+    let minDist = isMobile ? 38 : 26;
+
+    skillNodes.forEach(node => {
+      const hub = hubs.find(h => h.id === node.hub);
+      if (!hub) return;
+      const hpx = cx + (hub.x > 0 ? hubSpreadX : -hubSpreadX);
+      const hpy = cy + (hub.y > 0 ? hubSpreadY : -hubSpreadY);
+      const baseRadius = isMobile ? Math.min(node.radius * 0.52, width * 0.14) : node.radius;
+      const nx = hpx + Math.cos(node.angle) * baseRadius;
+      const ny = hpy + Math.sin(node.angle) * baseRadius;
+      const dist = Math.hypot(mouseX - nx, mouseY - ny);
+      if (dist < minDist) {
+        minDist = dist;
+        closest = node;
+      }
+    });
+
+    if (closest) {
+      selectSkillFilter(closest.label);
+    } else if (hoveredNode) {
       selectSkillFilter(hoveredNode.label);
+    }
+  };
+
+  canvas.addEventListener('click', (e) => {
+    handleNodeSelect(e.clientX, e.clientY);
+  });
+
+  // Mobile Touch Gestures (Drag orbit & Tap select)
+  canvas.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 1) {
+      isDraggingCanvas = true;
+      lastTouchX = e.touches[0].clientX;
+      lastTouchY = e.touches[0].clientY;
+      touchStartTime = Date.now();
+      updatePointer(lastTouchX, lastTouchY);
+    }
+  }, { passive: true });
+
+  canvas.addEventListener('touchmove', (e) => {
+    if (isDraggingCanvas && e.touches.length === 1) {
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
+      const deltaX = touchX - lastTouchX;
+      
+      // Rotate nodes based on touch swipe
+      skillNodes.forEach(n => {
+        n.angle += deltaX * 0.008;
+      });
+
+      lastTouchX = touchX;
+      lastTouchY = touchY;
+      updatePointer(touchX, touchY);
+    }
+  }, { passive: true });
+
+  canvas.addEventListener('touchend', (e) => {
+    if (isDraggingCanvas) {
+      isDraggingCanvas = false;
+      const touchDuration = Date.now() - touchStartTime;
+      // If it was a quick tap (< 250ms), select the tapped node
+      if (touchDuration < 250 && e.changedTouches.length === 1) {
+        handleNodeSelect(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+      }
     }
   });
 
@@ -607,14 +709,18 @@ function initSkillsInteractiveGraph() {
 
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
     ctx.clearRect(0, 0, width, height);
+    const isMobile = width < 640;
     const cx = width / 2;
     const cy = height / 2;
 
-    // Hub positions
+    // Hub positions scaled for screen width
+    const hubSpreadX = isMobile ? Math.min(width * 0.28, 88) : 180;
+    const hubSpreadY = isMobile ? 65 : 75;
+
     const resolvedHubs = hubs.map(h => ({
       ...h,
-      px: cx + (width < 640 ? h.x * 0.55 : h.x),
-      py: cy + h.y
+      px: cx + (h.x > 0 ? hubSpreadX : -hubSpreadX),
+      py: cy + (h.y > 0 ? hubSpreadY : -hubSpreadY)
     }));
 
     // Draw central inter-hub connectors
@@ -636,16 +742,21 @@ function initSkillsInteractiveGraph() {
       const hub = resolvedHubs.find(h => h.id === node.hub);
       if (!hub) return;
 
-      const radius = width < 640 ? node.radius * 0.65 : node.radius;
-      const nx = hub.px + Math.cos(node.angle) * radius;
-      const ny = hub.py + Math.sin(node.angle) * radius;
+      const baseRadius = isMobile ? Math.min(node.radius * 0.52, width * 0.14) : node.radius;
+      let nx = hub.px + Math.cos(node.angle) * baseRadius;
+      let ny = hub.py + Math.sin(node.angle) * baseRadius;
+
+      // Keep node circle safely within canvas boundaries
+      const safeMargin = isMobile ? 18 : 22;
+      nx = Math.max(safeMargin, Math.min(width - safeMargin, nx));
+      ny = Math.max(safeMargin, Math.min(height - safeMargin, ny));
 
       // Check direct mouse hover
       const d = Math.hypot(mouseX - nx, mouseY - ny);
-      const isDirectHover = d < 22;
+      const isDirectHover = d < (isMobile ? 26 : 22);
       if (isDirectHover) hoveredNode = node;
 
-      // Check if locked by user click (persists until next skill click!)
+      // Check if locked by user click
       const isLocked = activeLockedSkill && (
         node.label.toLowerCase() === activeLockedSkill.toLowerCase() ||
         activeLockedSkill.toLowerCase().includes(node.label.toLowerCase()) ||
@@ -661,33 +772,43 @@ function initSkillsInteractiveGraph() {
       ctx.strokeStyle = isActive 
         ? node.color 
         : (isLight ? 'rgba(15, 23, 42, 0.14)' : 'rgba(255, 255, 255, 0.08)');
-      ctx.lineWidth = isLocked ? 3 : (isActive ? 2.2 : 0.9);
+      ctx.lineWidth = isLocked ? (isMobile ? 2.4 : 3) : (isActive ? 2 : 0.85);
       if (isActive) {
         ctx.shadowColor = node.color;
-        ctx.shadowBlur = isLocked ? 14 : 8;
+        ctx.shadowBlur = isLocked ? 12 : 7;
       }
       ctx.stroke();
       ctx.shadowBlur = 0;
 
       // Node circle
+      const dotRadius = isLocked ? (isMobile ? 7 : 8.5) : (isActive ? (isMobile ? 6 : 7.5) : (isMobile ? 4 : 5));
       ctx.beginPath();
-      ctx.arc(nx, ny, isLocked ? 8.5 : (isActive ? 7.5 : 5), 0, Math.PI * 2);
+      ctx.arc(nx, ny, dotRadius, 0, Math.PI * 2);
       ctx.fillStyle = isActive 
         ? (isLight ? '#0284c7' : '#ffffff') 
         : node.color;
       ctx.shadowColor = node.color;
-      ctx.shadowBlur = isLocked ? 18 : (isActive ? 14 : 6);
+      ctx.shadowBlur = isLocked ? 16 : (isActive ? 12 : 5);
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // Skill Label with High-Contrast Typography
+      // Skill Label with Boundary-Aware Layout (Flips to left if near right edge)
       ctx.font = isActive 
-        ? 'bold 12.5px "JetBrains Mono", monospace' 
-        : '600 11px "JetBrains Mono", monospace';
+        ? (isMobile ? 'bold 10px "JetBrains Mono", monospace' : 'bold 12px "JetBrains Mono", monospace')
+        : (isMobile ? '600 9px "JetBrains Mono", monospace' : '600 11px "JetBrains Mono", monospace');
       ctx.fillStyle = isActive 
         ? (isLight ? '#0284c7' : '#38bdf8') 
         : (isLight ? '#0f172a' : '#f8fafc');
-      ctx.fillText(node.label, nx + 9, ny + 4);
+
+      const labelWidth = ctx.measureText(node.label).width;
+      let textX = nx + (isMobile ? 6 : 9);
+      // Auto flip label to left of node if it would exceed canvas right edge
+      if (textX + labelWidth > width - 6) {
+        textX = nx - labelWidth - (isMobile ? 6 : 9);
+      }
+      if (textX < 6) textX = 6;
+
+      ctx.fillText(node.label, textX, ny + (isMobile ? 3 : 4));
     });
 
     // Draw Hub Nodes on top
@@ -699,39 +820,40 @@ function initSkillsInteractiveGraph() {
         )
       );
 
+      const hubRadius = isHubLocked ? (isMobile ? 22 : 27) : (isMobile ? 18 : 24);
       ctx.beginPath();
-      ctx.arc(h.px, h.py, isHubLocked ? 27 : 24, 0, Math.PI * 2);
-      ctx.fillStyle = isLight ? '#ffffff' : 'rgba(14, 20, 36, 0.9)';
+      ctx.arc(h.px, h.py, hubRadius, 0, Math.PI * 2);
+      ctx.fillStyle = isLight ? '#ffffff' : 'rgba(14, 20, 36, 0.92)';
       ctx.strokeStyle = h.color;
-      ctx.lineWidth = isHubLocked ? 3.5 : (isLight ? 2.5 : 2);
+      ctx.lineWidth = isHubLocked ? (isMobile ? 2.8 : 3.5) : (isLight ? 2.2 : 1.8);
       ctx.shadowColor = h.color;
-      ctx.shadowBlur = isHubLocked ? 24 : (isLight ? 8 : 16);
+      ctx.shadowBlur = isHubLocked ? 18 : (isLight ? 6 : 14);
       ctx.fill();
       ctx.stroke();
       ctx.shadowBlur = 0;
 
-      // If hub contains the locked skill, draw dashed pulse orbit ring
+      // Pulse ring for locked hub
       if (isHubLocked) {
         ctx.beginPath();
-        ctx.arc(h.px, h.py, 32, 0, Math.PI * 2);
+        ctx.arc(h.px, h.py, hubRadius + (isMobile ? 5 : 8), 0, Math.PI * 2);
         ctx.strokeStyle = h.color;
-        ctx.lineWidth = 1.8;
-        ctx.setLineDash([4, 4]);
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([3, 3]);
         ctx.stroke();
         ctx.setLineDash([]);
       }
 
       // Inner Hub Accent Dot
       ctx.beginPath();
-      ctx.arc(h.px, h.py, 6, 0, Math.PI * 2);
+      ctx.arc(h.px, h.py, isMobile ? 4 : 6, 0, Math.PI * 2);
       ctx.fillStyle = h.color;
       ctx.fill();
 
       // Hub Title below node
-      ctx.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
+      ctx.font = isMobile ? 'bold 10.5px "Plus Jakarta Sans", sans-serif' : 'bold 12px "Plus Jakarta Sans", sans-serif';
       ctx.fillStyle = isLight ? '#0f172a' : '#ffffff';
       ctx.textAlign = 'center';
-      ctx.fillText(h.label, h.px, h.py + 38);
+      ctx.fillText(h.label, h.px, h.py + (isMobile ? 30 : 38));
       ctx.textAlign = 'start';
     });
 
@@ -976,10 +1098,23 @@ function updateSkillsHintLocked(skillName, count) {
   if (!hint) return;
   if (skillName) {
     hint.classList.add('locked');
-    hint.innerHTML = `<i class="fa-solid fa-lock" style="color:var(--accent-cyan);"></i> Active Focus: <strong>${skillName}</strong> (${count} project${count === 1 ? '' : 's'} filtered below) &bull; <a href="#projects" style="color:var(--accent-blue);font-weight:700;text-decoration:underline;" onclick="event.stopPropagation();">View Filtered Projects &darr;</a> &bull; <span style="text-decoration:underline;cursor:pointer;" onclick="event.stopPropagation(); resetSkillFilter();">Reset</span>`;
+    hint.innerHTML = `
+      <div class="skills-hint-info">
+        <i class="fa-solid fa-lock" style="color:var(--accent-cyan);"></i>
+        <span>Active Focus: <strong>${skillName}</strong> (${count} matching project${count === 1 ? '' : 's'})</span>
+      </div>
+      <div class="skills-hint-actions">
+        <a href="#projects" class="skills-hint-btn view-btn" onclick="event.stopPropagation();">
+          <i class="fa-solid fa-arrow-down"></i> View Projects
+        </a>
+        <button class="skills-hint-btn reset-btn" onclick="event.stopPropagation(); resetSkillFilter();">
+          <i class="fa-solid fa-rotate-left"></i> Reset Filter
+        </button>
+      </div>
+    `;
   } else {
     hint.classList.remove('locked');
-    hint.innerHTML = `<i class="fa-solid fa-crosshairs"></i> Click any skill node or matrix pill to lock highlight across projects (persists until next skill click)`;
+    hint.innerHTML = `<span class="skills-hint-default"><i class="fa-solid fa-crosshairs"></i> Tap any skill node or matrix pill to highlight matching projects</span>`;
   }
 }
 
@@ -1440,24 +1575,139 @@ function initScrollSpy() {
 // ==========================================================================
 function initMobileMenu() {
   const mobileBtn = document.getElementById('mobileMenuBtn');
-  const navLinks = document.querySelector('.nav-links');
+  const navLinks = document.getElementById('navLinks') || document.querySelector('.nav-links');
+  const backdrop = document.getElementById('mobileBackdrop');
   if (!mobileBtn || !navLinks) return;
 
-  mobileBtn.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
-    mobileBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    mobileBtn.innerHTML = isOpen 
-      ? '<i class="fa-solid fa-xmark"></i>' 
-      : '<i class="fa-solid fa-bars"></i>';
-    playBlip(600, 'sine', 0.04);
+  function openMenu() {
+    navLinks.classList.add('open');
+    if (backdrop) backdrop.classList.add('open');
+    mobileBtn.setAttribute('aria-expanded', 'true');
+    mobileBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    navLinks.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('open');
+    mobileBtn.setAttribute('aria-expanded', 'false');
+    mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+    document.body.style.overflow = '';
+  }
+
+  mobileBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = navLinks.classList.contains('open');
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+      playBlip(600, 'sine', 0.04);
+    }
   });
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeMenu);
+  }
 
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      mobileBtn.setAttribute('aria-expanded', 'false');
-      mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      closeMenu();
     });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+      closeMenu();
+    }
+  });
+}
+
+// Global hook for drawer buttons
+window.closeMobileDrawer = function() {
+  const navLinks = document.getElementById('navLinks') || document.querySelector('.nav-links');
+  const backdrop = document.getElementById('mobileBackdrop');
+  const mobileBtn = document.getElementById('mobileMenuBtn');
+  if (navLinks) navLinks.classList.remove('open');
+  if (backdrop) backdrop.classList.remove('open');
+  if (mobileBtn) {
+    mobileBtn.setAttribute('aria-expanded', 'false');
+    mobileBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+  }
+  document.body.style.overflow = '';
+};
+
+// ==========================================================================
+// 17. SCROLL-REVEAL SYSTEM (SMOOTH INTERSECTION OBSERVER ENHANCEMENT)
+// ==========================================================================
+function initScrollReveal() {
+  if (prefersReducedMotion) {
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-revealed'));
+    return;
+  }
+
+  // Target key UI elements to reveal as user scrolls
+  const targets = document.querySelectorAll(
+    '.section-header, .metric-card, .experience-card, .project-card, .cert-card, .skill-category, .contact-box'
+  );
+
+  if (!targets.length) return;
+
+  targets.forEach((el) => {
+    el.classList.add('reveal-on-scroll');
+    const parentGrid = el.closest('.metrics-grid, .projects-grid, .cert-grid, .skills-container, .experience-list');
+    if (parentGrid) {
+      const siblings = Array.from(parentGrid.children);
+      const siblingIndex = siblings.indexOf(el);
+      if (siblingIndex > -1) {
+        el.style.transitionDelay = `${(siblingIndex % 4) * 80}ms`;
+      }
+    }
+  });
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  targets.forEach(el => observer.observe(el));
+}
+
+// ==========================================================================
+// 18. FLOATING BACK TO TOP BUTTON
+// ==========================================================================
+function initBackToTop() {
+  const btn = document.getElementById('backToTopBtn');
+  if (!btn) return;
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 380) {
+          btn.classList.add('show');
+        } else {
+          btn.classList.remove('show');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    playBlip(750, 'sine', 0.05);
   });
 }
 

@@ -59,13 +59,21 @@
         </div>
       </a>
 
-      <ul class="nav-links">
+      <ul class="nav-links" id="navLinks">
         <li><a href="#about" class="nav-item">About</a></li>
         <li><a href="#experience" class="nav-item">Experience</a></li>
         <li><a href="#skills" class="nav-item">Skills</a></li>
         <li><a href="#projects" class="nav-item">Projects</a></li>
         <li><a href="#credentials" class="nav-item">Credentials</a></li>
         <li><a href="#contact" class="nav-item">Contact</a></li>
+        <li class="mobile-drawer-cta">
+          <a href="assets/resume.pdf" download="Gokulkrishnan_G_Resume.pdf" class="btn btn-outline btn-sm mobile-drawer-btn" onclick="handleResumeDownload(event)">
+            <i class="fa-solid fa-file-arrow-down"></i> Resume PDF
+          </a>
+          <a href="#contact" class="btn btn-primary btn-sm mobile-drawer-btn" id="mobileDrawerHireBtn">
+            <i class="fa-solid fa-paper-plane"></i> Hire Me
+          </a>
+        </li>
       </ul>
 
       <div class="nav-cta">
@@ -84,6 +92,9 @@
       </div>
     </div>
   </nav>
+
+  <!-- Mobile Menu Backdrop -->
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
 
   <!-- ================= HERO SECTION ================= -->
   <section class="hero" id="home">
@@ -310,9 +321,9 @@
       <div class="skills-graph-wrapper" id="skillsGraphWrapper">
         <div class="skills-graph-container">
           <canvas id="skillsGraphCanvas"></canvas>
-          <div class="skills-graph-hint" id="skillsGraphHint">
-            <i class="fa-solid fa-crosshairs"></i> Click any skill node or matrix pill to lock highlight across projects (persists until next skill click)
-          </div>
+        </div>
+        <div class="skills-graph-hint" id="skillsGraphHint">
+          <span class="skills-hint-default"><i class="fa-solid fa-crosshairs"></i> Tap any skill node or matrix pill to highlight matching projects</span>
         </div>
       </div>
 
@@ -1134,6 +1145,11 @@
 
   <!-- Toast Notification -->
   <div class="toast" id="toastMessage">Copied to clipboard!</div>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top" title="Back to top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
 
   <!-- Scripts -->
   <script src="script.js"></script>
