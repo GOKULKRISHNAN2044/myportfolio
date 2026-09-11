@@ -1146,8 +1146,12 @@
   <!-- Toast Notification -->
   <div class="toast" id="toastMessage">Copied to clipboard!</div>
 
-  <!-- Floating Back to Top Button -->
+  <!-- Floating Back to Top Button with Circular Progress -->
   <button id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top" title="Back to top">
+    <svg class="progress-ring" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+      <circle class="progress-ring-bg" stroke="rgba(56, 189, 248, 0.18)" stroke-width="2.8" fill="transparent" r="20" cx="24" cy="24"/>
+      <circle id="backToTopProgress" class="progress-ring-circle" stroke="var(--accent-cyan)" stroke-width="2.8" stroke-linecap="round" fill="transparent" r="20" cx="24" cy="24"/>
+    </svg>
     <i class="fa-solid fa-arrow-up"></i>
   </button>
 

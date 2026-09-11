@@ -1239,7 +1239,7 @@ body {
   z-index: 990;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 0 15px rgba(56, 189, 248, 0.2);
   opacity: 0;
-  transform: translateY(16px);
+  transform: translateY(16px) scale(0.92);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -1251,7 +1251,7 @@ body {
 
 .back-to-top-btn.show {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
@@ -1259,8 +1259,28 @@ body {
   background: var(--accent-cyan);
   color: #070a12;
   border-color: var(--accent-cyan);
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.05);
   box-shadow: 0 14px 28px -5px rgba(56, 189, 248, 0.4);
+}
+
+.back-to-top-btn:hover #backToTopProgress {
+  stroke: #070a12;
+}
+
+.back-to-top-btn .progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+
+.back-to-top-btn .progress-ring-circle {
+  stroke-dasharray: 125.66;
+  stroke-dashoffset: 125.66;
+  transition: stroke-dashoffset 0.1s linear, stroke 0.2s ease;
 }
 
 /* Mobile Menu Backdrop */
@@ -2965,14 +2985,37 @@ body {
 /* Scroll Animation Utilities & Dynamic Reveal */
 .reveal-on-scroll {
   opacity: 0;
-  transform: translateY(28px) scale(0.98);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transform: translateY(32px) scale(0.97);
+  filter: blur(4px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
 }
 
 .reveal-on-scroll.is-revealed {
   opacity: 1;
   transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Timeline & Card in-view highlight on scroll */
+.experience-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease,
+              background-color 0.35s ease;
+}
+
+.experience-card.in-view {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 0 24px rgba(56, 189, 248, 0.15);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .experience-card.in-view {
+  border-color: rgba(2, 132, 199, 0.5);
+  box-shadow: 0 12px 30px -6px rgba(15, 23, 42, 0.1), 0 0 20px rgba(2, 132, 199, 0.12);
 }
 
 .fade-in-up {
