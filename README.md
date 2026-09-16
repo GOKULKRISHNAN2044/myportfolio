@@ -37,12 +37,12 @@ This repository hosts the personal portfolio website of **Gokulkrishnan G**. It 
 
 ## 🛠️ Tech Stack & Skills
 
-- **AI & Agentic Systems:** LangGraph, Multi-Agent Orchestration, FastMCP, RAG, AWS Bedrock (Claude Haiku Vision), Prompt Engineering, Sentence Transformers.
+- **AI & Agentic Systems:** LangGraph, Multi-Agent Orchestration, FastMCP, RAG, Google Gemini AI, AWS Bedrock (Claude Haiku Vision), Prompt Engineering, Sentence Transformers.
 - **Backend & Microservices:** Python (FastAPI, Flask), Go (Golang), REST APIs, Event-Driven Architecture, Celery, Redis.
-- **Data & Databases:** PostgreSQL, pgvector, SQLAlchemy, Alembic, SQLite.
+- **Data & Databases:** PostgreSQL, Supabase, pgvector, SQLAlchemy, Alembic, SQLite.
 - **Computer Vision & ML:** OpenCV, TensorFlow, Scikit-Learn, PyTorch basics, OCR.
 - **Cloud & DevOps:** AWS (ECS, EventBridge, S3, SES), Azure DevOps, Docker, Git, CI/CD pipelines.
-- **Frontend / UI:** HTML5, CSS3 (Modern Glassmorphism & Micro-animations), Vanilla JavaScript.
+- **Frontend / UI:** React, HTML5, CSS3 (Modern Glassmorphism & Micro-animations), Vanilla JavaScript.
 
 ---
 
@@ -51,7 +51,7 @@ This repository hosts the personal portfolio website of **Gokulkrishnan G**. It 
 ```text
 portfolio/
 ├── assets/                  # Certificates, project screenshots, and resume
-│   ├── resume.pdf           # Downloadable / viewable resume
+│   ├── gokul_krishnan_resume.pdf # Downloadable / viewable resume
 │   ├── GEN AI.png           # GenAI certification
 │   ├── IEEE_extreme.jpeg    # IEEE Xtreme credential
 │   ├── Infosis_1.jpg        # Infosys certifications

@@ -847,6 +847,8 @@ body {
   justify-content: space-between;
   padding-top: 16px;
   border-top: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .project-link {
@@ -863,6 +865,34 @@ body {
 .project-link:hover {
   color: #fff;
   gap: 10px;
+}
+
+.deployed-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.28);
+  padding: 4px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.12);
+  user-select: none;
+}
+
+.deployed-pill i {
+  font-size: 0.76rem;
+  color: #10b981;
+}
+
+[data-theme="light"] .deployed-pill {
+  color: #047857;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.35);
 }
 
 /* Certifications Showcase */

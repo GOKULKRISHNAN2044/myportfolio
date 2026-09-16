@@ -925,7 +925,7 @@ function resetSkillFilter() {
 
   clearMatrixPillHighlights();
   updateSkillsHintLocked(null, 0);
-  showToast('Restored all 16 projects');
+  showToast('Restored all 17 projects');
 }
 
 // Match a project card with a skill query
@@ -979,7 +979,22 @@ function matchProjectWithSkill(card, skillName) {
     return skills.includes('postgresql') || combined.includes('postgresql') || combined.includes('postgres');
   }
 
-  // 9. LangGraph
+  // 9. Gemini / Google Gemini
+  if (normSkill.includes('gemini')) {
+    return skills.includes('gemini') || combined.includes('gemini');
+  }
+
+  // 10. Supabase
+  if (normSkill.includes('supabase')) {
+    return skills.includes('supabase') || combined.includes('supabase');
+  }
+
+  // 11. React
+  if (normSkill === 'react' || normSkill.includes('react')) {
+    return skills.includes('react') || combined.includes('react');
+  }
+
+  // 12. LangGraph
   if (normSkill === 'langgraph') {
     return skills.includes('langgraph') || combined.includes('langgraph');
   }
@@ -1337,20 +1352,21 @@ function execCliCmd(cmdStr) {
       break;
 
     case 'projects':
-      appendCliLine('1. Enterprise Room Booking Management (Go Flagship Clean Arch)', 'highlight');
-      appendCliLine('2. FastAPI Clean Architecture Production REST API', 'highlight');
-      appendCliLine('3. Autonomous Multi-Agent Code Generation & Review (LangGraph)', 'highlight');
-      appendCliLine('4. Enterprise RAG Knowledge Base & Recommendation (pgvector)', 'highlight');
-      appendCliLine('5. Agentic HITL Framework & FastMCP Checkpoints', 'accent');
-      appendCliLine('6. LangChain AI Projects Suite (7 Modular Agent Systems)', 'accent');
-      appendCliLine('7. Library Reservation REST API & Go Concurrency Engine', 'info');
-      appendCliLine('8. AI Psychometric Stress Assistant & AGV Navigation (2 Forks)', 'info');
+      appendCliLine('1. Enterprise AI Request Triage Platform (Gemini + FastAPI · Tested & Delivered to Client)', 'highlight');
+      appendCliLine('2. Enterprise Room Booking Management (Go Flagship Clean Arch)', 'highlight');
+      appendCliLine('3. FastAPI Clean Architecture REST API', 'highlight');
+      appendCliLine('4. Autonomous Multi-Agent Code Generation & Review (LangGraph)', 'highlight');
+      appendCliLine('5. Enterprise RAG Knowledge Base & Recommendation (pgvector)', 'highlight');
+      appendCliLine('6. Agentic HITL Framework & FastMCP Checkpoints', 'accent');
+      appendCliLine('7. LangChain AI Projects Suite (7 Modular Agent Systems)', 'accent');
+      appendCliLine('8. Library Reservation REST API & Go Concurrency Engine', 'info');
+      appendCliLine('9. AI Psychometric Stress Assistant & AGV Navigation (2 Forks)', 'info');
       break;
 
     case 'resume':
       appendCliLine('Downloading Gokulkrishnan G Resume PDF...', 'success');
       triggerConfetti();
-      window.open('assets/resume.pdf', '_blank');
+      window.open('assets/gokul_krishnan_resume.pdf', '_blank');
       break;
 
     case 'clear':
