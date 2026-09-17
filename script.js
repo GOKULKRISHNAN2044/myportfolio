@@ -1352,7 +1352,7 @@ function execCliCmd(cmdStr) {
       break;
 
     case 'projects':
-      appendCliLine('1. Enterprise AI Request Triage Platform (Gemini + FastAPI · Tested & Delivered to Client)', 'highlight');
+      appendCliLine('1. Enterprise AI Request Triage Platform (Gemini + FastAPI · Production Ready)', 'highlight');
       appendCliLine('2. Enterprise Room Booking Management (Go Flagship Clean Arch)', 'highlight');
       appendCliLine('3. FastAPI Clean Architecture REST API', 'highlight');
       appendCliLine('4. Autonomous Multi-Agent Code Generation & Review (LangGraph)', 'highlight');
